@@ -10,11 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_09_080454) do
+ActiveRecord::Schema.define(version: 2025_04_09_154817) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email"
     t.string "encrypted_password"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "artist_groups", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "artist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "artist_posts", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "artist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -57,7 +75,6 @@ ActiveRecord::Schema.define(version: 2025_04_09_080454) do
 
   create_table "groups", force: :cascade do |t|
     t.integer "owner_id"
-    t.integer "artist_id"
     t.text "introduction"
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -66,7 +83,6 @@ ActiveRecord::Schema.define(version: 2025_04_09_080454) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "artist_id"
     t.string "title"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
@@ -81,6 +97,10 @@ ActiveRecord::Schema.define(version: 2025_04_09_080454) do
     t.boolean "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

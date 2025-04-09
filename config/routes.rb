@@ -1,39 +1,42 @@
 Rails.application.routes.draw do
+  
   namespace :admin do
-    get 'genres/index'
-    get 'genres/edit'
+    root to: 'homes#top'
+    resources :genres, only: [:index, :create, :edit, :update]
+    resources :artists, only: [:index, :create, :edit, :update]
+    resources :users, only: [:index, :show, :edit, :update]
+    resources :posts, only: [:index, :destroy]
+    resources :groups, only: [:index, :destroy]
+    resources :comments, only: [:index, :destroy]
   end
-  namespace :admin do
-    get 'artists/index'
-    get 'artists/edit'
-  end
-  namespace :admin do
-    get 'users/index'
-    get 'users/show'
-    get 'users/edit'
-  end
-  namespace :admin do
-    get 'homes/top'
-  end
+  
   namespace :public do
-    get 'groups/new'
-    get 'groups/index'
-    get 'groups/show'
-    get 'groups/edit'
+    root to: 'homes#top'
+    get 'homes/about' => 'homes#about', as: 'about'
+    get 'users/mypage' => 'users#show'
+    get 'users/information/edit' => 'users#edit'
+    patch 'users/information' => 'users#update'
+    get  'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' #退会確認画面へのパス
+    patch 'users/withdraw' => 'users#withdraw', as:'withdraw' #退会処理アクションのパス
+    resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+      resource :group_users, only: [:create, :destroy]
+    end
+    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+      resource :goods, only: [:create, :destroy]
+      resource :comments, only: [:create, :destroy]
+    end
+    resources :genres, only: [:index, :show]
+    resources :artists, only: [:index, :show]
   end
-  namespace :public do
-    get 'posts/new'
-    get 'posts/index'
-    get 'posts/show'
-    get 'posts/edit'
-  end
-  namespace :public do
-    get 'users/edit'
-    get 'users/show'
-  end
-  namespace :public do
-    get 'homes/top'
-    get 'homes/about'
-  end
+  
+  devise_for :users, controllers: {
+    registrations: "public/registrations",
+    sessions: "public/sessions"
+  }
+
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
