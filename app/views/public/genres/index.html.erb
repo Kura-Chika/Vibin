@@ -1,2 +1,23 @@
-<h1>Public::Genres#index</h1>
-<p>Find me in app/views/public/genres/index.html.erb</p>
+<p>ジャンル一覧</p>
+<p>各ジャンル名をクリックで詳細ページへ</p>
+
+<h5 class="text-left"><strong>ジャンル一覧</strong><span></span></h5>
+<div class="row justify-content-center">
+  #<% @genres.each do |genre| %>
+    #<div class="col-md-3 col-sm-6 col-12 text-center">
+      <!-- ジャンルイメージ variant：サイズ変更 processed：未処理画像でもエラーにならないようにする -->
+      #<%= link_to genre_path(genre) do %>
+        #<%= image_tag genre.image.variant(resize: "200x200").processed %>
+      #<% end %><br>
+
+      #<%= genre.name %><br>
+
+    #</div>
+  #<% end %>
+
+</div>
+<div class="row justify-content-center">
+  <div class="d-flex justify-content-center">
+    <%= paginate @genres %>
+  </div>
+</div>

@@ -1,2 +1,12 @@
-<h1>Public::Genres#show</h1>
-<p>Find me in app/views/public/genres/show.html.erb</p>
+<p>ジャンル詳細ページ</p>
+<p>ジャンルに関連するアーティストを一覧表示</p>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <%= image_tag @genre.image.variant(resize: "350x350"), class: "img-fluid rounded", alt: @genre.name %>
+    </div>
+
+
+  </div>
+</div>

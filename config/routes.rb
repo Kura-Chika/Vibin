@@ -10,10 +10,10 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :destroy]
   end
   
-  namespace :public do
+  scope module: :public do
     root to: 'homes#top'
     get 'homes/about' => 'homes#about', as: 'about'
-    get 'users/mypage' => 'users#show'
+    get 'users/mypage' => 'users#show', as: 'users_mypage'
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'
     get  'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' #退会確認画面へのパス

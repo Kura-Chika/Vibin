@@ -1,2 +1,28 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<p>トップページ</p>
+<p>新着投稿4件表示、全投稿へのリンク</p>
+<p>おすすめグループ4件表示、全グループへのリンク</p>
+<div class="position-relative" style="height: 400px;">
+  <!-- 背景 -->
+  #<div style="background-image: url; background-size: cover; background-position: center; height: 100%; filter: brightness(1); position: absolute; top: 0; left: 0; width: 100%; z-index: -1;"></div>
+  
+  <!-- 半透明のオーバーレイ -->
+  #<div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.7); z-index: -1;"></div>
+  
+  <!-- 文字を中央に配置 -->
+  #<div class="d-flex justify-content-center align-items-center w-100 h-100 text-white text-center" style="z-index: 1">
+    <div>
+      <p class="fs-4 fw-bold">Vibin'へようこそ！！</p>
+      <p>音楽共有サイト</p>
+    </div>
+  #</div>
+</div>
+
+
+
+<div class="d-flex justify-content-end">
+  <%= link_to 'すべての投稿を見る＞', posts_path %>
+</div>
+
+<div class="d-flex justify-content-end">
+  <%= link_to 'すべてのグループを見る＞', groups_path %>
+</div>
