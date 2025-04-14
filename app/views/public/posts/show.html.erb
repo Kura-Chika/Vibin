@@ -1,5 +1,3 @@
-<p>投稿の詳細</p>
-
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-md-1">
@@ -12,11 +10,8 @@
                 <%= @user.nickname %>
               <% end %>
             </td>
-            <td>
-              <%= link_to post_path(@post) do %>
-                <%= @post.title %>
-              <% end %>
-            </td>
+            <td><%= @post.title %></td>
+            <td>コメント数： <%= @post.comments.count %></td>
             <td><%= @post.body %></td>
             <% if @user == current_user %>
               <td>
@@ -29,6 +24,8 @@
           </tr>
         </tbody>
       </table>
+      <%= render "public/comments/index", post: @post %>
+      <%= render "public/comments/form", post: @post, comment: @comment %>
     </div>
   </div>
 </div>

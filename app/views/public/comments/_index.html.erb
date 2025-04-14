@@ -1,0 +1,19 @@
+<table>
+  <tbody>
+    <% post.comments.each do |comment| %>
+    <tr>
+      <td>
+        <%= link_to users_mypage_path(comment.user) do %>
+          <%= comment.user.nickname %>
+        <% end %>
+      </td>
+      <td><%= comment.body %></td>
+      <td>
+        <% if comment.user == current_user %>
+          <%= link_to "削除", post_comments_path(post_id: comment.post.id, id: comment.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger float-end" %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,19 +1,18 @@
-<p>トップページ</p>
-
 <div class="position-relative" style="height: 400px;">
   <!-- 背景 -->
-  #<div style="background-image: url; background-size: cover; background-position: center; height: 100%; filter: brightness(1); position: absolute; top: 0; left: 0; width: 100%; z-index: -1;"></div>
+  <div style="background-image: url('<%= asset_path('Vibin_top.jpg') %>'); background-size: cover; background-position: center; height: 100%; filter: brightness(1); position: absolute; top: 0; left: 0; width: 100%; z-index: -1;"></div>
   
   <!-- 半透明のオーバーレイ -->
-  #<div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.7); z-index: -1;"></div>
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.7); z-index: -1;"></div>
   
   <!-- 文字を中央に配置 -->
-  #<div class="d-flex justify-content-center align-items-center w-100 h-100 text-white text-center" style="z-index: 1">
+  <div class="d-flex justify-content-center align-items-center w-100 h-100 text-white text-center" style="z-index: 1">
     <div>
+      <h2><strong>Top</strong></h2>
       <p class="fs-4 fw-bold">Vibin へようこそ！！</p>
       <p>音楽共有サイト</p>
     </div>
-  #</div>
+  </div>
 </div>
 <h2>新着投稿</h2>
 <div class="row">

@@ -1,21 +1,20 @@
-<p>アバウトページ・このサイトについて</p>
 <p>全ユーザーの投稿一覧のリンク</p>
 
 <div class="container">
-  <div class="row justify-content-center text-center">
-    <h1 class="px-3"><strong>About</strong></h1>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-lg-10 text-center">
-      <p>Vibin'についての紹介</p>
-      <p>名前の由来</p>
+  <div class="position-relative" style="height: 400px;">
+  <!-- 背景 -->
+  <div style="background-image: url('<%= asset_path('Vibin_about.jpg') %>'); background-size: cover; background-position: center; height: 100%; filter: brightness(1); position: absolute; top: 0; left: 0; width: 100%; z-index: -1;"></div>
+  
+  <!-- 半透明のオーバーレイ -->
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.7); z-index: -1;"></div>
+  
+  <!-- 文字を中央に配置 -->
+  <div class="d-flex justify-content-center align-items-center w-100 h-100 text-white text-center" style="z-index: 1">
+    <div>
+      <h2><strong>About</strong></h2>
+      <p class="fs-4 fw-bold">Vibin についての紹介</p>
       <p>会員でない方も投稿の閲覧可能</p>
       <p>新規投稿やグループへの参加には会員登録が必要</p>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    #<div class="col-lg-10 text-center">
-    #  <%= image_tag ".jpg", alt: "サンプル画像", class: "img-fluid" %>
-    #</div>
   </div>
 </div>
