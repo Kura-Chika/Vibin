@@ -1,2 +1,31 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<div class=" container">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |f| %>
+        <table>
+          <tr>
+            <th class="pb-2">ニックネーム</th>
+            <td class="pb-2 pl-5">
+              <%= f.text_field :nickname, autofocus: true,autocomplete:"nickname", class: "form-control rounded" %>
+            </td>
+          </tr>
+          <tr>
+            <th class="pb-2">メールアドレス</th>
+            <td class="pb-2 pl-5">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control rounded" %>
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="pl-5">
+              <%= f.submit "編集内容を保存", class: "btn btn-success my-4 w-100" %>
+            </td>
+            <td class="pr-0">
+              <%= link_to "退会する", unsubscribe_path, class: "btn btn-danger my-4 offset-5" %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

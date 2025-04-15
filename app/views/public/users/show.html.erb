@@ -1,6 +1,35 @@
-<p>マイページ・ユーザー情報</p>
-<p>ユーザー情報 編集ボタン</p>
-<p>自分の投稿一覧</p>
-<p>参加グループ一覧</p>
-<p>いいねした投稿一覧へのボタン</p>
-<p>カレンダー</p>
+#<p>参加グループ一覧</p>
+#<p>いいねした投稿一覧へのボタン</p>
+#<p>カレンダー</p>
+<div class="container">
+  <div class="row py-2">
+    <div class="px-sm-0">
+      <b>マイページ・ユーザー情報</b>
+    </div>
+    <div style="padding-left:80px;">
+      <%= link_to "編集する", users_information_edit_path, class: "btn btn-success w-100" %>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col-sm-10 px-sm-0">
+      <table class="table table-bordered w-100">
+        <tr>
+          <td class="table-active" style="width:30%">ニックネーム</td>
+          <td><%= @user.nickname %></td>
+        </tr>
+        <tr>
+          <td class="table-active" style="width:30%">メールアドレス</td>
+          <td><%= @user.email %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="px-sm-0">
+      <b>投稿一覧</b>
+    </div>
+    <div style="padding-left:95px;">
+      <%= link_to "一覧を見る", posts_path, class: "btn btn-primary", style: "width: 150%;" %>
+    </div>
+  </div>
+</div>
