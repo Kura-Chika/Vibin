@@ -13,6 +13,7 @@
             <td><%= @post.title %></td>
             <td>コメント数： <%= @post.comments.count %></td>
             <td><%= @post.body %></td>
+            <td><%= @post.artist_name %></td>
             <% if @user == current_user %>
               <td>
                 <%= link_to "Edit", edit_post_path(@post), class: "btn btn-success" %>

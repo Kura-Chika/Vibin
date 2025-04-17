@@ -1,12 +1,24 @@
 <%= form_with model: @post do |f| %>
-  <div class="field">
-    <%= f.label :タイトル %><br>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= f.label :内容 %><br>
-    <%= f.text_area :body, class: "form-control mb-3" %>
-  </div>
+  <table class="mx-auto">
+    <tr>
+      <th><%= f.label :item_image, "投稿画像" %></th>
+      <td><%= f.file_field :item_image, accept: "image/*" %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :title, "タイトル" %></th>
+      <td><%= f.text_field :title,  placeholder:"タイトル", class: "form-control" %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :body, "内容" %></th>
+      <td><%= f.text_area :body, size: "50x5", placeholder:"ここに投稿内容を記述します", class: "form-control" %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :artist_id, "アーティスト" %></th>
+      <td>
+        <%= f.collection_select :artist_id, Artist.all, :id, :name, include_blank: "--選択してください--", class: "form-control" %>
+      </td>
+    </tr>
+  </table>
   <div>
     <%= f.submit '新規投稿', class: "btn btn-success" %>
   </div>
