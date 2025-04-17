@@ -3,11 +3,12 @@ class Admin::ArtistsController < ApplicationController
   def index
     @artist = Artist.new
     @artists = Artist.all
+    @btn_text = '新規登録'
   end
 
   def create
-    @Artist = Artist.new(genre_params)
-    if @Artist.save
+    @artist = Artist.new(artist_params)
+    if @artist.save
       flash[:notice] = "アーティストを追加しました"
       redirect_to admin_artists_path
     else
@@ -18,6 +19,7 @@ class Admin::ArtistsController < ApplicationController
 
   def edit
     @artist = Artist.find(params[:id])
+    @btn_text = '変更を保存'
   end
 
   def update
@@ -34,6 +36,6 @@ class Admin::ArtistsController < ApplicationController
   private
 
   def artist_params
-    params.require(:artist).permit(:name, :introduction)
+    params.require(:artist).permit(:name, :introduction, :artist_image, :genre_id)
   end
 end

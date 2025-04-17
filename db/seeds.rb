@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Admin.find_or_create_by!(email: 'admin@email.com') do |admin|
+  admin.password = 'aaaaaa'
+  admin.password_confirmation = 'aaaaaa'
+end
+
 member1 = User.find_or_create_by!(email: "aaa@aaa") do |user|
   user.nickname = "メンバー1"
   user.password = "111111"
@@ -24,3 +29,4 @@ end
 member2.posts.find_or_create_by!(title: "SKZのライブ初参戦レポ！") do |post|
   post.body = "SKZのライブ情報共有します！"
 end
+

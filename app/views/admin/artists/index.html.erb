@@ -1,1 +1,30 @@
-<p>アーティストの登録・一覧画面</p>
+<div class="container-fluid position-relative">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-8">
+      <h5>アーティスト一覧・追加</h5>
+      <%= render 'admin/artists/form', artist: @artist, btntxt: @btn_text %>
+  <div class="justify-content-center mt-4">
+  <div class="col-6">
+    <table class="table">
+      <thead style="background-color: #E0E0E0; color: #333;">
+        <tr>
+          <th>画像</th>
+          <th>アーティスト名</th>
+          <th>紹介文</th>
+          <th></th>
+        </tr>
+      </thead>
+    <tbody>
+       <% @artists.each do |artist| %>
+        <tr>
+          <td><%= image_tag artist.artist_image, size: "300x300", class: "img-fluid rounded shadow-sm", alt: "アーティスト画像" %></td>
+          <td><%= artist.name %></td>
+          <td><%= artist.introduction %></td>
+          <td><%= link_to "編集する", edit_admin_artist_path(artist), class:"btn btn-success" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>

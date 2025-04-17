@@ -1,0 +1,9 @@
+<div class="row mt-3">
+  <div class="col-auto ">
+    <%= form_with model: genre, url: genre.persisted? ? admin_genre_path : admin_genres_path, method: genre.persisted? ? :patch : :post, class: "form-inline d-flex" do |f| %>
+      <%= f.label :name, "ジャンル名" ,class: "mx-3" %>
+            <%= f.text_field :name, class: "form-control w-40 mr-4", placeholder: "ジャンル名" %>
+        <%= f.submit btntxt, class:"btn btn-success px-4 " %>
+        <% end %>
+    </div>
+  </div>

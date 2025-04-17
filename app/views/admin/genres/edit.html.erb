@@ -1,2 +1,8 @@
-<h1>Admin::Genres#edit</h1>
-<p>Find me in app/views/admin/genres/edit.html.erb</p>
+<div class="container-fluid position-relative">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-8">
+      <h5 class="d-inline-block p-2 m-4" style="background-color: #E0E0E0; color: #333;">
+        ジャンル編集
+      </h5>
+
+      <%= render 'admin/genres/form', genre: @genre, btntxt: @btn_text %>
