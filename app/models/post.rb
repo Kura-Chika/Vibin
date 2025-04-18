@@ -9,4 +9,12 @@ class Post < ApplicationRecord
     goods.exists?(user_id: user.id)#既にいいねを押しているかどうか
   end
 
+  # 検索機能
+  scope :search_by_name, ->(query, match_type) {
+    case match_type
+    when 'partial' then where("CONCAT(title, body) LIKE ?", "%#{query}%")
+    else all
+    end
+  }
+
 end

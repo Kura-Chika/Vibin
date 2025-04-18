@@ -1,0 +1,94 @@
+<div class='container'>
+  <div class="row">
+    <% if @search_type == 'User' %>
+      <h4 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">
+        "<%= @query %>" で 会員を検索
+      </h4>
+    <% else @search_type == 'Post' %>
+      <h4 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">
+        "<%= @query %>" で 投稿を検索
+      </h4>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @results.any? %>
+        <table class ="table">
+          <!-- 会員についての検索結果 -->
+          <% if @search_type == 'User' %>
+            <thead style="background-color: #f1f1f1; color: #333;">
+              <tr>
+                <th>会員ID</th>
+                <th>ニックネーム</th>
+                <th>メールアドレス</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @results.each do |result| %>
+                <tr>
+                  <td>
+                    <%= result.id %>
+                  </td>
+                  <td>
+                    <%= link_to "result.nickname", admin_user_path(result), class: 'text-dark' %>
+                  </td>
+                  <td>
+                    <%= result.email %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          <!-- 商品についての検索結果 -->
+          <% elsif @search_type == 'PostPost' %>
+            <!-- 管理者ログイン時 -->
+            <% if admin_signed_in? %>
+              <thead style="background-color: #f1f1f1; color: #333;">
+                <tr>
+                  <th>投稿ID</th>
+                  <th>タイトル</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @results.each do |result| %>
+                  <tr>
+                    <td class="align-middle">
+                      <%= result.id %>
+                    </td>
+                    <td class="align-middle">
+                      <%= link_to admin_post_path(result.id), class: 'text-dark' do %>
+                        <%= result.title %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            <!-- 会員ログインまたは未ログイン時 -->
+            <% else %>
+              <thead style="background-color: #f1f1f1; color: #333;">
+                <tr>
+                  <th>タイトル</th>
+                  <th>投稿内容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @pub_results.each do |result| %>
+                  <tr>
+                    <td style="white-space: nowrap;">
+                      <%= image_tag result.post_image, size: "40x40" %>
+                      <%= link_to result.title, post_path(result.id) %>
+                    </td>
+                    <td>
+                      <%= result.body %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            <% end %>
+          <% end %>
+        </table>
+      <% else %>
+        <p>該当する結果は見つかりませんでした。</p>
+      <% end %>
+    </div>
+  </div>
+</div>
