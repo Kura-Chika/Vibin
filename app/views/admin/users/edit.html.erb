@@ -1,2 +1,54 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<h2>ユーザー情報更新</h2>
+<div class="container-fluid position-relative">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-8">
+      <h5 class="d-inline-block px-4 m-4" style="background-color: #E0E0E0; color: #333;"><%= @user.nickname %>さんの会員情報編集</h5>
+
+      <table class="table table-borderless ml-5">
+        <%= form_with model: @user, url: admin_user_path(@user), method: :patch, local: true do |f| %>
+
+          <tr>
+            <td>会員ID</td>
+            <td><%= @user.id %></td>
+          </tr>
+
+          <tr>
+            <td>ニックネーム</td>
+            <td>
+              <%= f.text_field :nickname, class: "form-control d-inline-block w-25",autofocus: true, autocomplete: "nickname",  placeholder: "ニックネーム" %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>メールアドレス</td>
+            <td>
+              <%= f.text_field :email, class: "form-control d-inline-block w-25", autocomplete: "email",  placeholder: "sample@example.com" %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>会員ステータス</td>
+            <td>
+              <div class="custom-control custom-radio custom-control-inline">
+                <%= f.radio_button :is_active, true, checked: @user.is_active == true, class:'custom-control-input', id:'status-active' %>
+                <%= f.label :is_active, '有効', class: 'custom-control-label', for:'status-active' %>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <%= f.radio_button :is_active, false, checked: @user.is_active == false, class: 'custom-control-input', id:'status-deleted' %>
+                <%= f.label :is_active, '退会済み', class: 'custom-control-label', for: 'status-deleted' %>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td>
+              <%= f.submit "変更を保存", class: "btn btn-success" %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+    </div>
+  </div>
+</div>

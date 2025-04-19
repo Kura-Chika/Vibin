@@ -17,4 +17,24 @@ class Post < ApplicationRecord
     end
   }
 
+  def save_artist_post
+    # タグが存在していれば、タグの名前を配列として全て取得
+      current_tags = self.artist_post_tags.pluck(:name) unless self.artist_tags.nil?
+      # 現在取得したタグから送られてきたタグを除いてoldtagとする
+      old_tags = current_tags - tags
+      # 送信されてきたタグから現在存在するタグを除いたタグをnewとする
+      new_tags = tags - current_tags
+  
+      # 古いタグを消す
+      old_tags.each do |old_name|
+        self.artist.delete Artist.find_by(name:old_name)
+      end
+  
+      # 新しいタグを保存
+      new_tags.each do |new_name|
+        artist = Artist.find_or_create_by(name:new_name)
+        self.artists << artist
+      end
+    end
+
 end
