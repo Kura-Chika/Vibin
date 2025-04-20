@@ -1,9 +1,7 @@
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-3'>
-      
     </div>
-
     <div class='col-md-8 offset-md-1'>
       <h2>グループ詳細</h2>
       <table class="table table-hover table-inverse">
@@ -17,12 +15,25 @@
         </thead>
         <tbody>
             <tr>
-              <td><%= image_tag @group.get_image, size:"100x100" %></td>
+              <td><%= image_tag @group.group_image, size:"50x50" %></td>
               <td><%= @group.name %></td>
               <td><%= @group.introduction %></td>
+              <td>
+                <% @group.users.each do |user| %>
+                 <li style="list-style: none;"><%= user.nickname %></li>
+                <% end %>
+              </td>
               <% if @group.owner_id == current_user.id %>
                 <td>
                   <%= link_to 'Edit', edit_group_path(@group), class: "btn btn-sm btn-success" %>
+                </td>
+              <% else %>
+                <td>
+                  <% if @group.includesUser?(current_user)%>
+                    <%= link_to 'Leave this group', group_group_users_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
+                  <% else %>
+                    <%= link_to 'Join this group', group_group_users_path(@group), method: :post, class: "btn btn-sm btn-success" %>
+                  <% end %>
                 </td>
               <% end %>
             </tr>

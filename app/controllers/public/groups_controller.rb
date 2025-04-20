@@ -1,5 +1,7 @@
 class Public::GroupsController < ApplicationController
-  
+  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
+
   def index 
     @groups = Group.all
   end
@@ -13,7 +15,7 @@ class Public::GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new
+    @group = Group.new(group_params)
     # 誰が作ったグループかを判断するため
     @group.owner_id = current_user.id
     if @group.save

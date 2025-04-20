@@ -5,9 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   has_many :posts
-  has_many :comments
-  has_many :goods
-  has_many :group_users
+  has_many :comments, dependent: :destroy
+  has_many :goods, dependent: :destroy
+  has_many :group_users, dependent: :destroy
+  has_one_attached :user_image
+
+  validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :introduction, length: { maximum: 50 }
 
   # 検索機能
   scope :search_by_fullname, ->(query, match_type) {
