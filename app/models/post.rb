@@ -11,6 +11,7 @@ class Post < ApplicationRecord
   end
 
   def goods_by?(user) # 現在ログインしているユーザーによっていいねされているかの確認
+    return false unless user.present?
     goods.exists?(user_id: user.id) # 既にいいねを押しているかどうか
   end
 

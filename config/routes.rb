@@ -13,11 +13,15 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'homes/about' => 'homes#about', as: 'about'
-    get 'users/mypage' => 'users#show', as: 'users_mypage'
-    get 'users/information/edit' => 'users#edit'
-    patch 'users/information' => 'users#update'
-    get  'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' #退会確認画面へのパス
-    patch 'users/withdraw' => 'users#withdraw', as:'withdraw' #退会処理アクションのパス
+    resources :users, only: [:index, :show] do
+      collection do
+        get 'users/mypage' => 'users#mypage', as: 'mypage'
+        get 'users/information/edit' => 'users#edit', as: 'edit'
+        patch 'users/information' => 'users#update', as: 'update'
+        get  'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' #退会確認画面へのパス
+        patch 'users/withdraw' => 'users#withdraw', as:'withdraw' #退会処理アクションのパス
+      end
+    end
     resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       resource :group_users, only: [:create, :destroy]
     end

@@ -16,12 +16,22 @@
           <% @posts.each do |post| %>
             <tr>
               <td>
-                <%= link_to users_mypage_path(post.user_id) do %>
-                  <%= @user.nickname %>
+                <%= link_to user_path(post.user_id) do %>
+                  <% if post.user.user_image.attached? %>
+                    <%= image_tag post.user.user_image.variant(resize_to_fill: [50, 50]), class: "rounded-circle" %>
+                  <% else %>
+                    <%= image_tag 'Vibin_no_image.jpg', width: 50, height: 50, class: "rounded-circle" %>
+                  <% end %>
                 <% end %>
+                <%= post.user.nickname %>
               </td>
               <td>
                 <%= link_to post_path(post.id) do %>
+                  <% if post.post_image.attached? %>
+                    <%= image_tag post.post_image, width: 220, height: 160, class: "img-resize rounded mx-auto d-block", style: "object-fit: cover;" %>
+                  <% else %>
+                    <%= image_tag 'Vibin_no_image.jpg', width: 220, height: 160, class: "img-resize rounded mx-auto d-block", style: "object-fit: cover;" %>
+                  <% end %>
                   <%= post.title %>
                 <% end %>
               </td>

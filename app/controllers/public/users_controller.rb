@@ -6,9 +6,19 @@ class Public::UsersController < ApplicationController
     @user = current_user
   end
 
+  def index
+    @users = User.all
+  end
+
   def show
-    @user = current_user#@表記を変える
     @user = User.find(params[:id])
+    @posts = @user.posts
+  end
+
+  def mypage
+    @user = current_user
+    @posts = @user.posts
+    @groups = @user.groups
   end
 
   def update

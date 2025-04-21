@@ -6,15 +6,25 @@
         <tbody>
           <tr>
             <td>
-              <%= link_to users_mypage_path(@user) do %>
+              <%= link_to user_path(@user) do %>
+                <% if @user.user_image.attached? %>
+                  <%= image_tag @user.user_image.variant(resize_to_fill: [60, 60]), class: "rounded-circle mr-2" %>
+                <% else %>
+                  <%= image_tag 'Vibin_no_image.jpg', width: 60, height: 60, class: "rounded-circle mr-2" %>
+                <% end %>
                 <%= @user.nickname %>
               <% end %>
             </td>
             <td><%= @post.title %></td>
-            <td>コメント数： <%= @post.comments.count %></td>
+            <% if @post.post_image.attached? %>
+              <%= image_tag @post.post_image, class: "img-fluid rounded", style: "max-width: 100%; height: auto;" %>
+            <% else %>
+              <%= image_tag 'Vibin_no_image.jpg', class: "img-fluid rounded", style: "max-width: 100%; height: auto;" %>
+            <% end %>
             <td><%= @post.body %></td>
-            <td><%= @post.artists_name %></td>
+            <td>コメント数： <%= @post.comments.count %></td>
             <td><%= render "public/goods/form", post: @post %></td>
+            <td><%= @post.artists_name %></td>
             <% if @user == current_user %>
               <td>
                 <%= link_to "Edit", edit_post_path(@post), class: "btn btn-success" %>
