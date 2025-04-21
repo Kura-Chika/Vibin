@@ -57,10 +57,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem "enum_help"
-gem 'kaminari','~> 1.2.1'
-gem 'bootstrap5-kaminari-views', '~> 0.0.1'
+gem 'kaminari','~> 1.2.1' # ページネーション
+gem 'bootstrap5-kaminari-views', '~> 0.0.1' # ページネーションのbootstrap化
 
-#MySQLを利用するためのgem
+# MySQLを利用するためのgem
 gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
@@ -70,4 +70,5 @@ gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
 
-#gem 'ransack'
+gem 'rails-i18n' # 日本語化
+gem 'devise-i18n-views'
