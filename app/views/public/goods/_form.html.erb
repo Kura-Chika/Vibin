@@ -1,4 +1,4 @@
-<% if post.favorited_by?(current_user) %>
+<% if post.goods_by?(current_user) %>
   <%= link_to post_goods_path(post), method: :delete do %>
     <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
     <%= post.goods.count %> いいね

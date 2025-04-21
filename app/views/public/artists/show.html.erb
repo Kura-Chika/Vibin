@@ -1,15 +1,32 @@
-<p>アーティスト詳細ページ</p>
-<p>アーティストに関連する投稿を一覧表示</p>
-
 <div class="container my-5">
   <div class="row">
     <div class="col-md-6 text-center">
-      <%= image_tag @artist.image.variant(resize: "350x350"), class: "img-fluid rounded", alt: @artist.name %>
     </div>
 
     <div class="col-md-6">
       <h2 class="font-weight-bold mb-3"><%= @artist.name %></h2>
       <p class="lead"><%= @artist.introduction %></p>
+      <h2><%= @artist.name %> の関連投稿一覧</h2>
+      <% if @posts.any? %>
+        <ul>
+          <% @posts.each do |post| %>
+            <li><%= link_to post.title, post_path(post) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>関連投稿はありません。</p>
+      <% end %>
+      
+      <h2><%= @artist.name %> の関連グループ一覧</h2>
+      <% if @groups.any? %>
+        <ul>
+          <% @groups.each do |group| %>
+            <li><%= link_to group.name, group_path(group) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>関連グループはありません。</p>
+      <% end %>
     </div>
   </div>
 </div>

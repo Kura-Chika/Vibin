@@ -7,25 +7,11 @@ class Public::PostsController < ApplicationController
   def index
     @posts = Post.all
     @user = current_user
-    @artist_posts = ArtistPost.all
-    @tag_list = Artist.all
-    end
   end
 
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
-    @artist_post = ArtistPost.new(artist_post_params)
-    @artist_post.end_user_id = current_end_user.id
-     # 受け取った値を,で区切って配列にする
-    tag_list = params[:artist_post][:name].split(',')
-    if @artist_post.save
-      @artist_post.save_workout_tags(tag_list)
-      redirect_to artist_posts_path, notice:'投稿が完了しました'
-    else
-      render :new
-    end
-  
     if @post.save
       flash[:notice] = "新規投稿に成功しました"
       redirect_to post_path(@post)
@@ -40,15 +26,10 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @user = @post.user
     @comment = Comment.new
-    @artist_post = ArtistPost.find(params[:id])
-    @tag_list = @artist_post.workout_tags.pluck(:name).join(',')
-    @artist_post_tags = @artist_post.workout_tags
   end
 
   def edit
     @post = Post.find(params[:id])
-    @artist_post = ArtistPost.find(params[:id])
-    @tag_list = @artist_post.artist_tags.pluck(:name).join(',')
   end
 
   def update
@@ -56,15 +37,6 @@ class Public::PostsController < ApplicationController
     if @post.update(post_params)
       flash[:notice] = "投稿の更新に成功しました"
       redirect_to post_path(@post.id)
-    else
-      render :edit
-    end
-
-    @artist_post = ArtistPost.find(params[:id])
-    tag_list=params[:artist_post][:name].split(',')
-    if @artist_post.update(artist_post_params)
-      @artist_post.save_artist_tags(tag_list)
-      redirect_to post_artists_path
     else
       render :edit
     end
@@ -79,7 +51,7 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body)
+    params.require(:post).permit(:title, :body, :post_image, artist_ids: [])
   end
 
   def ensure_correct_user

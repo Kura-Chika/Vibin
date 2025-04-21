@@ -14,6 +14,12 @@
     <%= f.file_field :group_image, class: "form-control-file", accept: 'image/*' %>
   </div>
 
+  <%= f.label :アーティストタグ %><br>
+  <% Artist.all.each do |artist| %>
+    <%= check_box_tag "group[artist_ids][]", artist.id, @group.artist_ids.include?(artist.id) %>
+    <%= artist.name %><br>
+  <% end %>
+
   <div class="form-group">
     <%= f.submit class: 'btn btn-info' %>
   </div>

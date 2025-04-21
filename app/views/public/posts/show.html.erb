@@ -13,8 +13,8 @@
             <td><%= @post.title %></td>
             <td>コメント数： <%= @post.comments.count %></td>
             <td><%= @post.body %></td>
-            <td><%= @post.artist_name %></td>
-            <td><%= render "goods/form", post: @post %></td>
+            <td><%= @post.artists_name %></td>
+            <td><%= render "public/goods/form", post: @post %></td>
             <% if @user == current_user %>
               <td>
                 <%= link_to "Edit", edit_post_path(@post), class: "btn btn-success" %>
@@ -25,11 +25,6 @@
             <% end %>
           </tr>
         </tbody>
-        <!-- タグリスト -->
-      <% @artist_post_tags.each do |tag| %>
-      <i class="fa-sharp fa-solid fa-tag"></i>
-        <%= link_to tag.name,search_tag_path(artist_tag_id: tag.id) %>
-      <% end %>
       </table>
       <%= render "public/comments/index", post: @post %>
       <%= render "public/comments/form", post: @post, comment: @comment %>

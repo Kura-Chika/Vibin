@@ -3,6 +3,7 @@
       <tr>
         <th></th>
         <th>グループ名</th>
+        <th>関連アーティスト</th>
         <th>参加メンバー数</th>
         <th>紹介文</th>
         <th></th>
@@ -13,6 +14,7 @@
         <tr>
           <td><%= image_tag group.group_image, size:"50x50" %></td>
           <td><%= link_to group.name, group_path(group), class: "group_#{group.id}" %></td>
+          <td><%= group.artists_name %></td>
           <td><%= group.group_users.count %></td>
           <td><%= group.introduction %></td>
           <% if group.owner_id == current_user.id %>

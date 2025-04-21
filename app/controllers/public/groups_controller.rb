@@ -30,6 +30,7 @@ class Public::GroupsController < ApplicationController
   end
 
   def update
+    @group = Group.find(params[:id])
     if @group.update(group_params)
       redirect_to groups_path
     else
@@ -40,7 +41,7 @@ class Public::GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :introduction, :group_image)
+    params.require(:group).permit(:name, :introduction, :group_image, artist_ids: [])
   end
 
   # owner_idがログインuser_idと同じか確認。

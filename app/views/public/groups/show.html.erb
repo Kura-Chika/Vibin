@@ -10,6 +10,7 @@
             <th></th>
             <th>グループ名</th>
             <th>紹介文</th>
+            <th>関連アーティスト</th>
             <th></th>
           </tr>
         </thead>
@@ -18,6 +19,7 @@
               <td><%= image_tag @group.group_image, size:"50x50" %></td>
               <td><%= @group.name %></td>
               <td><%= @group.introduction %></td>
+              <td><%= @group.artists_name %></td>
               <td>
                 <% @group.users.each do |user| %>
                  <li style="list-style: none;"><%= user.nickname %></li>

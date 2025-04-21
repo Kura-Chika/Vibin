@@ -7,6 +7,7 @@
           <tr>
             <th>投稿主</th>
             <th>タイトル</th>
+            <th>いいね</th>
             <th>内容</th>
           </tr>
         </thead>
@@ -24,17 +25,11 @@
                   <%= post.title %>
                 <% end %>
               </td>
+              <td><%= render "public/goods/form", post: post %></td>
               <td><%= post.body %></td>
             </tr>
           <% end %>
         </tbody>
-        <!--タグリスト-->
-  <% @tag_list.each do |list|%>
-    <i class="fa-sharp fa-solid fa-tag"></i>
-    <%=link_to list.name,search_tag_path(workout_tag_id: list.id) %>
-    <%="(#{list.post_workouts.count})" %>
-  <% end %>
-  <td><%= render "goods/form", post: post %></td>
       </table>
     </div>
   </div>

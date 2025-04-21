@@ -45,7 +45,7 @@
                   <% end %>
                 </li>
                 <li>
-                  <%= link_to destroy_admin_session_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
+                  <%= link_to destroy_admin_session_path, method: :delete, class: 'btn btn-outline-secondary mx-1 my-1' do %>
                     <i class="fa-solid fa-right-from-bracket"></i> ログアウト
                   <% end %>
                 </li>
@@ -58,6 +58,11 @@
                 <li>
                   <%= link_to posts_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
                     <i class="fa-solid fa-paste"></i> 投稿一覧
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to artists_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
+                    <i class="fa-solid fa-users"></i> アーティスト一覧
                   <% end %>
                 </li>
                 <li>

@@ -24,6 +24,13 @@
           <%= f.text_area :body %>
         </div>
         <div>
+          <%= f.label :artist_id, "アーティストタグ" %><br>
+          <% Artist.all.each do |artist| %>
+            <%= check_box_tag "post[artist_ids][]", artist.id, @post.artist_ids.include?(artist.id) %><br>
+            <%= artist.name %><br>
+          <% end %>
+        </div>
+        <div>
           <%= f.submit '投稿を更新' %>
         </div>
       <% end %>

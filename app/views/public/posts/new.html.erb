@@ -13,9 +13,12 @@
       <td><%= f.text_area :body, size: "50x5", placeholder:"ここに投稿内容を記述します", class: "form-control" %></td>
     </tr>
     <tr>
-      <th><%= f.label :artist_id, "アーティスト" %></th>
+      <th><%= f.label :artist_id, "アーティストタグ" %></th>
       <td>
-        <%= f.collection_select :artist_id, Artist.all, :id, :name, include_blank: "--選択してください--", class: "form-control" %>
+        <% Artist.all.each do |artist| %>
+          <%= check_box_tag "post[artist_ids][]", artist.id, @post.artist_ids.include?(artist.id) %>
+          <%= artist.name %><br>
+        <% end %>
       </td>
     </tr>
   </table>
