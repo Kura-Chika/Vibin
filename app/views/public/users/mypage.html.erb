@@ -3,7 +3,7 @@
   <%= image_tag @user.user_image, class: "profile-image" if @user.user_image.attached? %>
   <p><strong>メールアドレス：</strong> <%= @user.email %></p>
   <p><strong>自己紹介：</strong> <%= @user.introduction %></p>
-  <%= link_to "プロフィール編集", edit_users_path, class: "btn btn-sm btn-primary" %>
+  <%= link_to "プロフィール編集", edit_path, class: "btn btn-sm btn-primary" %>
 </div>
 
 <h2>あなたの投稿</h2>
