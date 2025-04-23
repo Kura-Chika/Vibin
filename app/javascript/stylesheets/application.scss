@@ -1,9 +1,19 @@
+$primary: #6610f2;
 $secondary: #60c1d9;
 $success: #e2c788;
 $info: #60c1d9;
 $warning: #60c1d9;
 $danger: #CC496B;
 $light: #60c1d9;
-$dark: #284063;
+$dark: #51b3ec;
+
+.hover-shadow:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  transition: all 0.3s ease-in-out;
+}
+.object-fit-cover {
+  object-fit: cover;
+}
 
 @import '~bootstrap/scss/bootstrap';
