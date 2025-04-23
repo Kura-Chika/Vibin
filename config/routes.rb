@@ -25,8 +25,11 @@ Rails.application.routes.draw do
     get 'users/mypage' => 'users#mypage', as: 'mypage'
     get 'users/information/edit' => 'users#edit', as: 'edit'
     patch 'users/information' => 'users#update', as: 'update'
-    get 'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' #退会確認画面へのパス
-    patch 'users/withdraw' => 'users#withdraw', as:'withdraw' #退会処理アクションのパス
+    get 'users/unsubscribe' => 'users#unsubscribe', as:'unsubscribe' # 退会確認画面
+    patch 'users/withdraw' => 'users#withdraw', as:'withdraw' # 退会処理アクション
+    get 'users/goods' => 'users#goods', as: 'user_goods' # いいねしたした一覧
+    get 'users/posts' => 'users#posts', as: 'user_posts' # 投稿した一覧
+    get 'users/groups' => 'users#groups', as: 'user_groups' # 参加グループ一覧
     
     resources :users, only: [:index, :show]
 

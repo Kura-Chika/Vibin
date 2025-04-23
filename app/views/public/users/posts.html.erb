@@ -1,0 +1,14 @@
+<div class="container my-4">
+  <h2>あなたの投稿一覧</h2>
+
+  <% if @user_posts.any? %>
+    <% @user_posts.each do |post| %>
+      <div class="card my-3 p-3 shadow-sm">
+        <h5><%= link_to post.title, post_path(post) %></h5>
+        <p><%= post.body.truncate(100) %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>まだ投稿がありません。</p>
+  <% end %>
+</div>

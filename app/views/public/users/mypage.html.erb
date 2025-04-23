@@ -1,35 +1,21 @@
-<div class="my-info">
-  <h2><%= @user.nickname %>さんのプロフィール</h2>
-  <%= image_tag @user.user_image, class: "profile-image" if @user.user_image.attached? %>
-  <p><strong>メールアドレス：</strong> <%= @user.email %></p>
-  <p><strong>自己紹介：</strong> <%= @user.introduction %></p>
-  <%= link_to "プロフィール編集", edit_path, class: "btn btn-sm btn-primary" %>
-</div>
+<div class="container my-4">
+  <div class="card p-4 shadow-sm">
+    <h2 class="mb-3"><%= @user.nickname %> さんのプロフィール</h2>
+    
+    <% if @user.user_image.attached? %>
+      <%= image_tag @user.user_image, class: "rounded-circle mb-3", size: "100x100" %>
+    <% end %>
 
-<h2>あなたの投稿</h2>
-<% @posts.each do |post| %>
-  <div class="post">
-    <h4><%= link_to post.title, post_path(post) %></h4>
-    <p><%= post.body.truncate(100) %></p>
+    <p><strong>メールアドレス：</strong> <%= @user.email %></p>
+    <p><strong>自己紹介：</strong> <%= @user.introduction %></p>
+
+    <%= link_to "プロフィール編集", edit_path, class: "btn btn-sm btn-outline-primary" %>
   </div>
-<% end %>
 
-<div>
-  <%= link_to "全ての投稿一覧を見る", posts_path, class: "btn btn-primary" %>
-</div>
-
-<h2>参加中のグループ</h2>
-<% @groups.each do |group| %>
-  <div class="group-box">
-    <%= image_tag group.group_image, size: "50x50" if group.group_image.attached? %>
-    <h5><%= link_to group.name, group_path(group) %></h5>
-    <p><%= group.introduction %></p>
+  <div class="mt-4 d-grid gap-2">
+    <%= link_to "あなたの投稿を見る", user_posts_path, class: "btn btn-outline―primary btn-lg" %><br>
+    <%= link_to "いいねした投稿を見る", user_goods_path, class: "btn btn-outline-primary btn-lg" %><br>
+    <%= link_to "参加中のグループを見る", user_groups_path, class: "btn btn-outline-secondary btn-lg" %>
   </div>
-<% end %>
-
-<div>
-  <%= link_to 'グループを作成する', new_group_path, class: "btn btn-primary" %><br>
-  <%= link_to 'グループ一覧', groups_path, class: "btn btn-primary" %>
 </div>
-
 

@@ -1,0 +1,15 @@
+<div class="container my-4">
+  <h2>あなたがいいねした投稿</h2>
+
+  <% if @user_goods.any? %>
+    <% @user_goods.each do |post| %>
+      <div class="card my-3 p-3 shadow-sm">
+        <h5><%= link_to post.title, post_path(post) %></h5>
+        <p>投稿者: <%= post.user.nickname %></p>
+        <p><%= truncate(post.body, length: 100) %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>まだいいねした投稿がありません。</p>
+  <% end %>
+</div>

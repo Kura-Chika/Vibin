@@ -17,18 +17,26 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @user = current_user
-    @posts = @user.posts
-    @groups = @user.groups
   end
 
   def update
-    user = current_user
-    if user.update(user_params)
-      redirect_to users_mypage_path,notice:"登録情報が更新されました"
+    if @user.update(user_params)
+      redirect_to mypage_path, notice:"プロフィールが更新されました"
     else
-      @user = current_user
       render :edit
     end
+  end
+
+  def posts
+    @user_posts = current_user.posts
+  end
+  
+  def goods
+    @user_goods = Post.user_goods(current_user, params[:page], 12)
+  end
+  
+  def groups
+    @user_groups = current_user.groups
   end
 
   def unsubscribe
@@ -49,9 +57,6 @@ private
   end
 
   def ensure_correct_user
-    @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to user_path(current_user)
-    end
+    @user = current_user
   end
 end

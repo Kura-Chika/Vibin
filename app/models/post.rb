@@ -15,6 +15,14 @@ class Post < ApplicationRecord
     goods.exists?(user_id: user.id) # 既にいいねを押しているかどうか
   end
 
+  def self.user_goods(user, page, per_page) # いいね一覧
+    includes(:goods) # goods テーブルを結合
+      .where(goods: { user_id: user.id }) # ユーザーがいいねしたレコードを絞り込む
+      .order(created_at: :desc) # 投稿を作成日時の降順でソート
+      .page(page) # ページネーション
+      .per(per_page) # ページごとに表示する投稿
+  end
+
   # 検索機能
   scope :search_by_name, ->(query, match_type) {
     case match_type

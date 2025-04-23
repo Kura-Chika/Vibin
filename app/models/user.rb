@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :groups, through: :group_users
   has_one_attached :user_image
 
-  validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :nickname, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
   # 検索機能
