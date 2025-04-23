@@ -15,8 +15,8 @@ class Post < ApplicationRecord
     goods.exists?(user_id: user.id) # 既にいいねを押しているかどうか
   end
 
-  def self.user_goods(user, page, per_page) # いいね一覧
-    includes(:goods) # goods テーブルを結合
+  def self.user_goods(user, page, per_page) # いいね一覧を表示するため
+    includes(:goods) # goodsテーブルを結合
       .where(goods: { user_id: user.id }) # ユーザーがいいねしたレコードを絞り込む
       .order(created_at: :desc) # 投稿を作成日時の降順でソート
       .page(page) # ページネーション
