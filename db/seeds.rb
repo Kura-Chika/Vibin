@@ -30,3 +30,10 @@ member2.posts.find_or_create_by!(title: "SKZのライブ初参戦レポ！") do 
   post.body = "SKZのライブ情報共有します！"
 end
 
+10.times do |i|
+  Event.create!(
+    title: "サンプルイベント#{i+1}",
+    start: Time.zone.now + i.days,
+    end: Time.zone.now + i.days + 1.hour
+  )
+end
