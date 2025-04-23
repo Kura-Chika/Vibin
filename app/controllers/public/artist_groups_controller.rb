@@ -1,4 +1,4 @@
-class Public::ArtistGroupController < ApplicationController
+class Public::ArtistGroupsController < ApplicationController
   def create
     @artist_group = ArtistGroup.new(artist_group_params)
     @artist_group.end_user_id = current_end_user.id
