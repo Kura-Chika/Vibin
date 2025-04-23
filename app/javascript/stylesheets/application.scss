@@ -1,1 +1,9 @@
-@use '~bootstrap/scss/bootstrap';
+$secondary: #60c1d9;
+$success: #e2c788;
+$info: #60c1d9;
+$warning: #60c1d9;
+$danger: #CC496B;
+$light: #60c1d9;
+$dark: #284063;
+
+@import '~bootstrap/scss/bootstrap';
