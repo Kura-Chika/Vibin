@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   end
   
   # カレンダー機能
-  get '/events', to: 'events#index', defaults: { format: 'json' }
+  resources :events, only: [:index]
   # 検索機能
   get 'search', to: 'searches#search'
 

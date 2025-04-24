@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendar = new Calendar(calendarEl, {
     plugins: [dayGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
-    locale: "jp",
-    events: '/events',
+    locale: "ja",
+    events: '/events.json',
     windowResize: function () { 
       if (window.innerWidth < 991.98) {
           calendar.changeView('listMonth');

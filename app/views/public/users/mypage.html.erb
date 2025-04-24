@@ -9,7 +9,7 @@
     <p><strong>メールアドレス：</strong> <%= @user.email %></p>
     <p><strong>自己紹介：</strong> <%= @user.introduction %></p>
 
-    <% if user.email != "guest@example.com" %>
+    <% if @user.email != "guest@example.com" %>
       <%= link_to "プロフィール編集", edit_path, class: "btn btn-sm btn-outline-primary" %>
     <% end %>
   </div>
