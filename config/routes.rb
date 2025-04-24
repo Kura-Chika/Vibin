@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'events/index'
   devise_for :users, controllers: {
     registrations: "public/registrations",
     sessions: "public/sessions"
@@ -48,7 +49,8 @@ Rails.application.routes.draw do
     resources :artists, only: [:index, :show]
   end
   
-
+  # カレンダー機能
+  get '/events', to: 'events#index', defaults: { format: 'json' }
   # 検索機能
   get 'search', to: 'searches#search'
 
