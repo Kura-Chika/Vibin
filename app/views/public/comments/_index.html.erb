@@ -1,19 +1,18 @@
-<table>
-  <tbody>
-    <% post.comments.each do |comment| %>
-    <tr>
-      <td>
-        <%= link_to mypage_path(comment.user) do %>
-          <%= comment.user.nickname %>
-        <% end %>
-      </td>
-      <td><%= comment.body %></td>
-      <td>
+<div class="comment-section mt-5">
+  <h4 class="mb-3 border-bottom pb-2">コメント</h4>
+  <% post.comments.each do |comment| %>
+    <div class="d-flex align-items-start mb-4 border-bottom pb-3">
+      <%= link_to (comment.user == current_user ? mypage_path : user_path(comment.user)), class: "me-3" do %>
+        <%= image_tag comment.user.user_image.attached? ? url_for(comment.user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-2", size: "40x40", alt: comment.user.nickname %>
+      <% end %>
+      <div class="flex-grow-1">
+        <div class="fw-bold mb-1"><%= comment.user.nickname %></div>
+        <p class="comment-body mb-2"><%= comment.body %></p>
+
         <% if comment.user == current_user %>
-          <%= link_to "削除", post_comments_path(post_id: comment.post.id, id: comment.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger float-end" %>
+          <%= link_to "削除", post_comments_path(post_id: comment.post.id, id: comment.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger rounded-pill px-3" %>
         <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+      </div>
+    </div>
+  <% end %>
+</div>

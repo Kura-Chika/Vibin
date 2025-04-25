@@ -1,43 +1,52 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-1">
-      <h2>投稿の詳細</h2>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>
-              <%= link_to user_path(@user) do %>
-                <% if @user.user_image.attached? %>
-                  <%= image_tag @user.user_image.variant(resize_to_fill: [60, 60]), class: "rounded-circle mr-2" %>
-                <% else %>
-                  <%= image_tag 'Vibin_no_image.jpg', width: 60, height: 60, class: "rounded-circle mr-2" %>
-                <% end %>
-                <%= @user.nickname %>
-              <% end %>
-            </td>
-            <td><%= @post.title %></td>
-            <% if @post.post_image.attached? %>
-              <%= image_tag @post.post_image, class: "img-fluid rounded", style: "max-width: 100%; height: auto;" %>
-            <% else %>
-              <%= image_tag 'Vibin_no_image.jpg', class: "img-fluid rounded", style: "max-width: 100%; height: auto;" %>
-            <% end %>
-            <td><%= @post.body %></td>
-            <td>コメント数： <%= @post.comments.count %></td>
-            <td><%= render "public/goods/form", post: @post %></td>
-            <td><%= @post.artists_name %></td>
-            <% if @user == current_user %>
-              <td>
-                <%= link_to "Edit", edit_post_path(@post), class: "btn btn-success" %>
-              </td>
-              <td>
-                <%= link_to "Destroy", post_path(@post), class: "btn btn-danger", method: :delete, data: { confirm: "本当に消しますか？" } %>
-              </td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+
+      <!-- 投稿者情報 -->
+      <div class="d-flex align-items-center mb-3">
+        <%= image_tag @user.user_image.attached? ? url_for(@user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-3", size: "80x80", alt: @user.nickname %>
+        <h3 class="ml-2 mb-0"><%= link_to @user.nickname, user_path(@user), class: "text-decoration-none text-dark" %></h3>
+      </div>
+
+      <!-- タイトル & いいね & 関連アーティスト-->
+      <div class="mb-4">
+        <h3 class="fw-bold"><%= @post.title %></h3>
+        <div class="d-flex align-items-center">
+          <%= render "public/goods/form", post: @post %>
+          <span class="ml-4"><i class="fa-regular fa-comment-dots"></i>
+            <%= @post.comments.count %> 件
+          </span>
+        </div>
+        <div><i class="fa-solid fa-music mr-2"></i><%= @post.artists_name %></div>
+      </div>
+
+      <!-- 本文 -->
+      <h5>投稿内容：</h5>
+      <div class="post-body-box">
+        <h4 class="mb-0"><%= simple_format(@post.body) %></h4>
+      </div>
+
+      <!-- 投稿画像 -->
+      <% if @post.post_image.attached? %>
+        <div class="text-center my-4">
+          <%= image_tag @post.post_image, class: "img-fluid rounded shadow" %>
+        </div>
+      <% end %>
+
+      <!-- 投稿編集ボタン（自分の投稿のみ） -->
+      <% if @user == current_user %>
+        <div class="d-flex gap-3 mb-4">
+          <%= link_to "編集", edit_post_path(@post), class: "btn btn-outline-primary rounded-pill px-3 mr-3" %>
+          <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger rounded-pill px-3" %>
+        </div>
+      <% end %>
+
+      <!-- コメント一覧 -->
       <%= render "public/comments/index", post: @post %>
+
+      <!-- コメント投稿フォーム -->
       <%= render "public/comments/form", post: @post, comment: @comment %>
+
     </div>
   </div>
 </div>

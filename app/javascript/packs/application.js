@@ -15,6 +15,7 @@ import "bootstrap";
 import "../stylesheets/application"; 
 
 import './calendar';
+import "./image_preview";
 
 Rails.start()
 Turbolinks.start()

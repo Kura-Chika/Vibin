@@ -1,11 +1,11 @@
 class Public::PostsController < ApplicationController
-  #before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_correct_user, only: [:edit, :update]
   def new
     @post = Post.new
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(9)
     @user = current_user
   end
 
