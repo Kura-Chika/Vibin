@@ -6,12 +6,16 @@
           <h3 class="mb-4 text-center fw-bold">プロフィール編集</h3>
           
           <%= form_with model: @user, url: update_path, method: :patch, local: true do |f| %>
-            
             <div class="mb-3">
               <%= f.label :user_image, "イメージ画像", class: "form-label fw-bold" %><br>
               <!-- 画像プレビュー -->
-              <div class="mb-2">
-                <%= image_tag(@user.user_image.attached? ? url_for(@user.user_image) : "Vibin_no_image.jpg", id: "preview", class: "rounded shadow-sm", style: "max-height: 200px;") %>
+              <div class="mb-2 text-center">
+                <% if @user.user_image.attached? %>
+                  <%= image_tag url_for(@user.user_image), id: "preview", class: "img-fluid rounded shadow", style: "max-height: 200px;" %>
+                <% else %>
+                  <p id="no-image-text">投稿画像はありません</p>
+                  <%= image_tag "", id: "preview", class: "img-fluid rounded shadow d-none", style: "max-height: 200px;" %>
+                <% end %>
               </div>
               <%= f.file_field :user_image, accept: "image/*", id: "user_image_input" %>
             </div>
@@ -28,7 +32,7 @@
 
             <div class="mb-4">
               <%= f.label :introduction, "紹介文", class: "form-label fw-semibold" %>
-              <%= f.text_field :introduction, autocomplete: "introduction", class: "form-control rounded-pill" %>
+              <%= f.text_area :introduction, rows: 3, autocomplete: "introduction", class: "form-control rounded-pill", style: "resize: none;" %>
             </div>
 
             <div class="d-flex justify-content-center mt-4">

@@ -5,7 +5,15 @@
     <% @user_posts.each do |post| %>
       <div class="card my-3 p-3 shadow-sm">
         <h5><%= link_to post.title, post_path(post) %></h5>
-        <p><%= post.body.truncate(100) %></p>
+        <div class="d-flex justify-content-end my-1">
+              <%= render "public/goods/form", post: post %>
+              <span class="text-muted ml-2">
+                <i class="fa-regular fa-comment-dots"></i>
+                <%= post.comments.count %>
+              </span>
+              <span class="ml-2"><i class="fa-solid fa-music mr-2"></i><%= post.artists_name %></span>
+            </div>
+        <p><%= post.body.truncate(50) %></p>
       </div>
     <% end %>
   <% else %>

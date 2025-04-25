@@ -1,6 +1,33 @@
-<% @users.each do |user| %>
-  <% next if user == current_user %>
-  <%= link_to user_path(user) do %>
-    <%= user.nickname %><br>
+<div class="container my-4">
+  <h2 class="mb-4 text-center">参加ユーザー 一覧</h2>
+  
+  <% @users.each do |user| %>
+    <% next if user == current_user %>
+    <div class="card mb-3 shadow-sm p-3">
+      <div class="d-flex align-items-center">
+        <!-- 丸い画像 -->
+        <div class="me-3 mr-3">
+          <%= image_tag user.user_image.attached? ? url_for(user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-2", size: "60x60", alt: user.nickname %>
+        </div>
+
+        <!-- ユーザー情報 -->
+        <div class="flex-grow-1">
+          <h5 class="mb-1">
+            <%= link_to user.nickname, user_path(user), class: "text-decoration-none" %>
+          </h5>
+          <p class="mb-1 text-muted">
+            投稿数： <%= user.posts.count %>
+          </p>
+          <p class="mb-0 text-muted">
+            参加グループ： 
+            <% if user.groups.any? %>
+              <%= user.groups.map(&:name).join(" , ") %>
+            <% else %>
+              なし
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
   <% end %>
-<% end %>
+</div>

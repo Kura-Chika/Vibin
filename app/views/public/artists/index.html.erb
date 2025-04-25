@@ -1,15 +1,31 @@
-<h5 class="text-left"><strong>アーティスト一覧</strong><span></span></h5>
-<div class="row justify-content-center">
-  <div class="col-md-3 col-sm-6 col-12 text-center">
-    <% @artists.each do |artist| %>
-      <li>
-        <%= link_to artist.name, artist_path(artist) %>
-      </li>
+<div class="container py-4">
+  <h2 class="mb-4 text-center fw-bold">アーティスト 一覧</h2>
+
+  <% @artists.each do |artist| %>
+    <%= link_to artist_path(artist), class: "text-decoration-none" do %>
+      <div class="card my-3 shadow-sm p-3 d-flex flex-row align-items-center h-100">
+        <!-- 画像部分 -->
+        <div class="me-4">
+          <%= image_tag artist.artist_image.attached? ? artist.artist_image : "Vibin_no_image.jpg", size: "100x100", class: "rounded-circle", style: "object-fit: cover;" %>
+        </div>
+
+        <!-- 情報部分 -->
+        <div class="flex-grow-1 ml-3">
+          <h5 class="mb-1"><%= artist.name %></h5>
+          <p class="mb-1 text-muted"><strong>ジャンル：</strong><%= artist.genre %></p>
+          <p class="mb-2"><%= artist.introduction.truncate(80) %></p>
+          <!-- 投稿数・グループ数 -->
+          <div class="text-muted small">
+            <span>関連した投稿：<%= artist.posts.count %> 件</span><br>
+            <span>関連したグループ：<%= artist.groups.count %> 件</span>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </div>
+  <% end %>
 </div>
-<div class="row justify-content-center">
-  <div class="d-flex justify-content-center">
-    <%= paginate @artists %>
-  </div>
+
+<!-- ページネーション -->
+<div class="mt-4 d-flex justify-content-center">
+  <%= paginate @artists, theme: 'bootstrap-5' %>
 </div>

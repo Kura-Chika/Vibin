@@ -1,23 +1,29 @@
 <div class="container my-4">
-  <div class="card p-4 shadow-sm">
+  <div class="card p-4 shadow-sm" style="min-height: 250px;">
     <h2 class="mb-3"><%= @user.nickname %> さんのプロフィール</h2>
-    
-    <% if @user.user_image.attached? %>
-      <%= image_tag @user.user_image, class: "rounded-circle mb-3", size: "100x100" %>
-    <% end %>
+    <div class="row align-items-center">
+      <!-- 左：画像 -->
+      <div class="col-md-4 text-center">
+        <%= image_tag @user.user_image.attached? ? url_for(@user.user_image) : "Vibin_no_image.jpg", class: "img-fluid rounded-0 shadow-sm", style: "max-width: 100%; height: auto;", alt: @user.nickname %>
+      </div>
+          
+        
 
-    <p><strong>メールアドレス：</strong> <%= @user.email %></p>
-    <p><strong>自己紹介：</strong> <%= @user.introduction %></p>
+      <!-- 右：メール、自己紹介 -->
+      <div class="col-md-8">
+        <h5><strong>メールアドレス：</strong> <%= @user.email %></h5>
+        <h5><strong>自己紹介：</strong> <%= @user.introduction %></h5>
 
-    <% if @user.email != "guest@example.com" %>
-      <%= link_to "プロフィール編集", edit_path, class: "btn btn-sm btn-outline-primary" %>
-    <% end %>
+        <% if @user.email != "guest@example.com" %>
+          <%= link_to "プロフィール編集", edit_path, class: "btn btn-primary rounded-pill mt-4" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="mt-4 d-grid gap-2">
-    <%= link_to "あなたの投稿を見る", user_posts_path, class: "btn btn-outline―primary btn-lg" %><br>
-    <%= link_to "いいねした投稿を見る", user_goods_path, class: "btn btn-outline-primary btn-lg" %><br>
-    <%= link_to "参加中のグループを見る", user_groups_path, class: "btn btn-outline-secondary btn-lg" %>
+  <div class="d-flex justify-content-between mt-4">
+    <%= link_to "あなたの投稿を見る", user_posts_path, class: "btn btn-outline-danger rounded-pill btn-lg" %><br>
+    <%= link_to "いいねした投稿を見る", user_goods_path, class: "btn btn-outline-primary rounded-pill btn-lg" %><br>
+    <%= link_to "参加中のグループを見る", user_groups_path, class: "btn btn-outline-secondary rounded-pill btn-lg" %>
   </div>
 </div>
 

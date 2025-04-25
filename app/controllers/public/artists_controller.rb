@@ -1,7 +1,6 @@
 class Public::ArtistsController < ApplicationController
   def index
-    @artists = Artist.page(params[:page]).per(8)
-    @genres = Genre.all 
+    @artists = Artist.includes(:genre).page(params[:page]).per(8)
   end
 
   def show

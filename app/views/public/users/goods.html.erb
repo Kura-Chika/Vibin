@@ -5,8 +5,13 @@
     <% @user_goods.each do |post| %>
       <div class="card my-3 p-3 shadow-sm">
         <h5><%= link_to post.title, post_path(post) %></h5>
-        <p>投稿者: <%= post.user.nickname %></p>
-        <p><%= truncate(post.body, length: 100) %></p>
+        <div class="d-flex flex-row">
+          <%= image_tag post.user.user_image.attached? ? url_for(post.user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-3", size: "80x80", alt: post.user.nickname %>
+          <div class="ml-3">
+            <p>投稿者： <%= post.user.nickname %></p>
+            <p><%= post.body.truncate(50) %></p>
+          </div>
+        </div>
       </div>
     <% end %>
   <% else %>

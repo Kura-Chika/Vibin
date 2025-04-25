@@ -3,23 +3,24 @@
   <div class="row g-4">
     <% @posts.each do |post| %>
       <div class="col-md-6 col-lg-4 mb-4">
-        <%= link_to post_path(post.id) do %>
+        <%= link_to post_path(post.id), class: "text-decoration-none" do %>
           <div class="card shadow-sm rounded-4 h-100">
             <!-- 上部：投稿情報 -->
             <div class="card-body pb-0">
               <div class="d-flex align-items-center mb-3">
-                <%= image_tag post.user.user_image.attached? ? url_for(post.user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-2", size: "40x40", alt: post.user.nickname %>
-                <strong><%= post.user.nickname %></strong>
+                <%= image_tag post.user.user_image.attached? ? url_for(post.user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-2", size: "80x80", alt: post.user.nickname %>
+                <strong class="ml-3"><%= post.user.nickname %></strong>
               </div>
-              <h5 class="card-title"><%= link_to post.title, post_path(post.id), class: "text-decoration-none text-dark" %></h5>
-              <p class="card-text text-muted small"><%= truncate(post.body, length: 100) %></p>
-              <div class="d-flex justify-content-between align-items-center mt-2">
+              <h5 class="card-title"><%= post.title %></h5>
+              <p class="card-text text-muted"><%= post.body.truncate(50) %></p>
+              <div class="d-flex justify-content-end my-2">
                 <%= render "public/goods/form", post: post %>
-                <span class="text-muted small">
+                <span class="text-muted ml-2">
                   <i class="fa-regular fa-comment-dots"></i>
-                  <%= post.comments.count %> 件
+                  <%= post.comments.count %>
                 </span>
               </div>
+              <div class="d-flex justify-content-end align-items-center my-2"><i class="fa-solid fa-music mr-2"></i><%= post.artists_name %></div>
             </div>
             <!-- 下部：投稿画像 -->
             <%= image_tag post.post_image.attached? ? url_for(post.post_image) : "Vibin_no_image.jpg", class: "card-img-bottom img-fluid object-fit-cover", style: "max-height: 200px;" %>

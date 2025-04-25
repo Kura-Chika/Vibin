@@ -1,26 +1,40 @@
-<%= form_with model: group, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :グループ名 %>
-    <%= f.text_field :name, class: 'form-control' %>
+<%= form_with model: group, local: true, class: "needs-validation" do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "グループ名", class: "form-label fw-bold" %>
+    <%= f.text_field :name, class: 'form-control', placeholder: "グループ名を入力" %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :紹介文 %>
-    <%= f.text_area :introduction, class: 'form-control' %>
+  <div class="mb-3">
+    <%= f.label :introduction, "紹介文", class: "form-label fw-bold" %>
+    <%= f.text_area :introduction, rows: 5, class: 'form-control', placeholder: "ここに紹介文を書いてみましょう…", style: "resize: none;" %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :グループ画像 %>
-    <%= f.file_field :group_image, class: "form-control-file", accept: 'image/*' %>
+  <div class="mb-4">
+    <label class="form-label fw-bold">アーティストタグ</label><br>
+    <div class="d-flex flex-wrap">
+      <% Artist.all.each do |artist| %>
+        <div class="form-check">
+          <%= check_box_tag "group[artist_ids][]", artist.id, @group.artist_ids.include?(artist.id), class: "form-check-input", id: "artist_#{artist.id}" %>
+          <%= label_tag "artist_#{artist.id}", artist.name, class: "form-check-label mr-3" %>
+        </div>
+      <% end %>
+    </div>
   </div>
+  <div class="mb-3">
+    <%= f.label :group_image, "グループ画像", class: "form-label fw-bold" %><br>
+    <!-- 画像プレビュー -->
+    <div class="mb-2 text-center">
+      <% if @group.group_image.attached? %>
+        <%= image_tag url_for(@group.group_image), id: "preview_group_image", class: "img-fluid rounded shadow", style: "max-height: 200px;" %>
+      <% else %>
+        <p id="no-image-text">グループ画像はありません</p>
+        <%= image_tag "", id: "preview", class: "img-fluid rounded shadow d-none", style: "max-height: 200px;" %>
+      <% end %>
+    </div>
+    <%= f.file_field :group_image, accept: "image/*", id: "group_image_input" %>
+  </div>  
 
-  <%= f.label :アーティストタグ %><br>
-  <% Artist.all.each do |artist| %>
-    <%= check_box_tag "group[artist_ids][]", artist.id, @group.artist_ids.include?(artist.id) %>
-    <%= artist.name %><br>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.submit class: 'btn btn-info' %>
+  <div class="d-flex justify-content-center my-3">
+    <%= f.submit class: 'btn btn-info rounded-pill px-4' %>
   </div>
 <% end %>

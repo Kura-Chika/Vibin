@@ -3,22 +3,22 @@
 
   <% if @user_groups.any? %>
     <% @user_groups.each do |group| %>
-      <div class="card my-3 p-3 shadow-sm d-flex align-items-center">
-        <% if group.group_image.attached? %>
-          <%= image_tag group.group_image, size: "60x60", class: "rounded-circle me-3" %>
-        <% end %>
-        <div>
-          <h5><%= link_to group.name, group_path(group) %></h5>
-          <p><%= group.introduction.truncate(100) %></p>
+      <div class="card my-3 p-3 shadow-sm d-flex flex-row align-items-center">
+        <%= image_tag group.group_image.attached? ? url_for(group.group_image) : "Vibin_no_image.jpg", class: "rounded-circle me-3", size: "100x100", alt: group.name %>
+        <div class="ml-3">
+          <h5><%= link_to group.name, group_path(group), class: "text-decoration-none" %></h5>
+          <p class="mb-2"><%= group.introduction.truncate(80) %></p>
+          参加メンバー数：<%= group.users.count %>人 <br>
+          <i class="fa-solid fa-music"></i>：<%= group.artists.pluck(:name).join(", ") %>
         </div>
       </div>
     <% end %>
   <% else %>
     <p>まだ参加中のグループはありません。</p>
   <% end %>
-</div>
-
-<div>
-  <%= link_to 'グループを作成する', new_group_path, class: "btn btn-primary" %><br>
-  <%= link_to 'グループ一覧', groups_path, class: "btn btn-primary" %>
+  
+  <div class="d-flex justify-content-center mt-3">
+    <%= link_to 'グループを作成する', new_group_path, class: "btn btn-outline-success rounded-pill" %><br>
+    <%= link_to 'グループ一覧', groups_path, class: "btn btn-outline-primary rounded-pill ml-5" %>
+  </div>
 </div>

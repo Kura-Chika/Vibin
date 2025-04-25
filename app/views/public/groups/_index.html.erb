@@ -1,28 +1,30 @@
-<table class="table table-hover table-inverse">
-    <thead>
-      <tr>
-        <th></th>
-        <th>グループ名</th>
-        <th>関連アーティスト</th>
-        <th>参加メンバー数</th>
-        <th>紹介文</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% groups.each do |group| %>
-        <tr>
-          <td><%= image_tag group.group_image, size:"50x50" %></td>
-          <td><%= link_to group.name, group_path(group), class: "group_#{group.id}" %></td>
-          <td><%= group.artists_name %></td>
-          <td><%= group.group_users.count %></td>
-          <td><%= group.introduction %></td>
-          <% if group.owner_id == current_user.id %>
-            <td>
-              <%= link_to 'Edit', edit_group_path(group), class: "group_#{group.id} btn btn-sm btn-success" %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<div class="container my-4">
+  <h2 class="mb-4 text-center">グループ一覧</h2>
+
+  <% @groups.each do |group| %>
+    <div class="card my-3 p-3 shadow-sm d-flex flex-row align-items-start">
+      <!-- グループ画像 -->
+      <%= image_tag group.group_image.attached? ? url_for(group.group_image) : "Vibin_no_image.jpg", class: "rounded-circle me-4", size: "80x80", alt: group.name %>
+
+      <!-- グループ情報 -->
+      <div class="flex-grow-1 ml-3">
+        <h5 class="mb-1">
+          <%= link_to group.name, group_path(group), class: "text-decoration-none text-dark" %>
+        </h5>
+        <p class="mb-2"><%= group.introduction.truncate(80) %></p>
+        <div class="small text-muted mb-1">
+          関連アーティスト：<%= group.artists.pluck(:name).join(" , ") %><br>
+          参加メンバー（<%= group.users.count %>人）：
+          <%= group.users.map(&:nickname).join(", ") %>
+        </div>
+        
+        <!-- オーナーなら編集 -->
+        <% if group.owner_id == current_user.id %>
+          <div class="d-flex justify-content-end">
+            <%= link_to '編集する', edit_group_path(group), class: "btn btn-sm btn-outline-success rounded-pill px-4" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

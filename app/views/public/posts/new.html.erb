@@ -1,6 +1,6 @@
-<%= form_with model: @post, class: "needs-validation" do |f| %>
-  <div class="container my-4 px-4 px-md-5 py-4 bg-white border rounded shadow-sm">
-
+<div class="container my-4 px-4 px-md-5 py-4 bg-white border rounded shadow-sm">
+  <h2 class="mb-4 text-center">新規投稿</h2>
+  <%= form_with model: @post, class: "needs-validation" do |f| %>
     <!-- タイトル -->
     <div class="mb-3">
       <%= f.label :title, "タイトル", class: "form-label fw-bold" %>
@@ -9,14 +9,14 @@
 
     <!-- 内容 -->
     <div class="mb-3">
-      <%= f.label :body, "内容", class: "form-label fw-bold", style: "resize: none;" %>
-      <%= f.text_area :body, rows: 5, placeholder: "ここに投稿内容を書いてみましょう…", class: "form-control" %>
+      <%= f.label :body, "内容", class: "form-label fw-bold" %>
+      <%= f.text_area :body, rows: 5, placeholder: "ここに投稿内容を書いてみましょう…", class: "form-control", style: "resize: none;" %>
     </div>
 
     <!-- アーティストタグ -->
     <div class="mb-4">
       <label class="form-label fw-bold">アーティストタグ</label>
-      <div class="d-flex flex-wrap gap-2">
+      <div class="d-flex flex-wrap">
         <% Artist.all.each do |artist| %>
           <div class="form-check">
             <%= check_box_tag "post[artist_ids][]", artist.id, @post.artist_ids.include?(artist.id), class: "form-check-input", id: "artist_#{artist.id}" %>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <!-- 投稿画像 -->
+    <!-- 投稿画像の表示＆プレビュー -->
     <div class="mb-3">
       <%= f.label :post_image, "投稿画像", class: "form-label fw-bold" %><br>
       <%= f.file_field :post_image, accept: "image/*", id: "post_image_input" %>
@@ -39,5 +39,5 @@
     <div class="text-center mt-4">
       <%= f.submit '新規投稿', class: "btn btn-success px-5 py-2 rounded-pill fw-bold" %>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

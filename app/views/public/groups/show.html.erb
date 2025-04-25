@@ -1,46 +1,36 @@
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-3'>
-    </div>
-    <div class='col-md-8 offset-md-1'>
-      <h2>グループ詳細</h2>
-      <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th></th>
-            <th>グループ名</th>
-            <th>紹介文</th>
-            <th>関連アーティスト</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><%= image_tag @group.group_image, size:"50x50" %></td>
-              <td><%= @group.name %></td>
-              <td><%= @group.introduction %></td>
-              <td><%= @group.artists_name %></td>
-              <td>
-                <% @group.users.each do |user| %>
-                 <li style="list-style: none;"><%= user.nickname %></li>
-                <% end %>
-              </td>
-              <% if @group.owner_id == current_user.id %>
-                <td>
-                  <%= link_to 'Edit', edit_group_path(@group), class: "btn btn-sm btn-success" %>
-                </td>
-              <% else %>
-                <td>
-                  <% if @group.includesUser?(current_user)%>
-                    <%= link_to 'Leave this group', group_group_users_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
-                  <% else %>
-                    <%= link_to 'Join this group', group_group_users_path(@group), method: :post, class: "btn btn-sm btn-success" %>
-                  <% end %>
-                </td>
-              <% end %>
-            </tr>
-        </tbody>
-      </table>
+<div class="container my-4">
+  <div class="card shadow-sm p-4">
+    <div class="d-flex">
+      <!-- グループ画像 -->
+      <div class="me-4">
+        <%= image_tag @group.group_image.attached? ? @group.group_image : "Vibin_no_image.jpg", size: "100x100", class: "rounded-circle", style: "object-fit: cover;" %>
+      </div>
+
+      <!-- グループ情報 -->
+      <div class="flex-grow-1 ml-3">
+        <h3 class="mb-2"><%= @group.name %></h3>
+        <p class="mb-2"><%= @group.introduction %></p>
+        <p class="mb-2 text-muted"><strong>関連アーティスト：</strong> <%= @group.artists_name %></p>
+        <p class="mb-0"><strong>参加メンバー（<%= @group.users.count %>人)：</strong></p>
+        <ul class="mb-2">
+          <% @group.users.each do |user| %>
+            <li><%= user.nickname %></li>
+          <% end %>
+        </ul>
+        
+        <!-- 編集・参加ボタン -->
+        <div class="d-flex justify-content-end">
+          <% if @group.owner_id == current_user.id %>
+            <%= link_to '編集する', edit_group_path(@group), class: "btn btn-outline-success rounded-pill px-4" %>
+          <% else %>
+            <% if @group.includesUser?(current_user) %>
+              <%= link_to 'グループを抜ける', group_group_users_path(@group), method: :delete, class: "btn btn-outline-danger rounded-pill mb-2" %>
+            <% else %>
+              <%= link_to '参加する', group_group_users_path(@group), method: :post, class: "btn btn-success rounded-pill mb-2" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

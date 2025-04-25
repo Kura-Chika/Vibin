@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const setupImagePreview = (inputId, previewId) => {
     const input = document.getElementById(inputId);
     const preview = document.getElementById(previewId);
+    const noImageText = document.getElementById("no-image-text");
 
     if (input && preview) {
       input.addEventListener("change", (e) => {
@@ -10,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const reader = new FileReader();
           reader.onload = () => {
             preview.src = reader.result;
-            preview.classList.remove("d-none"); // 必要であれば表示
+            preview.classList.remove("d-none");
+            if (noImageText) noImageText.style.display = "none";
           };
           reader.readAsDataURL(file);
         }
@@ -23,4 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 投稿画像用
   setupImagePreview("post_image_input", "preview_image");
+
+  // グループ画像用
+  setupImagePreview("group_image_input", "preview_group_image");
 });
