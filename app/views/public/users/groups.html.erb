@@ -8,8 +8,8 @@
         <div class="ml-3">
           <h5><%= link_to group.name, group_path(group), class: "text-decoration-none" %></h5>
           <p class="mb-2"><%= group.introduction.truncate(80) %></p>
-          参加メンバー数：<%= group.users.count %>人 <br>
-          <i class="fa-solid fa-music"></i>：<%= group.artists.pluck(:name).join(", ") %>
+          <i class="fa-solid fa-music"></i>：<%= group.artists.pluck(:name).join(" , ") %>
+          <h4><span class="badge bg-secondary rounded-pill px-3"><%= group.users.count %>人参加中</span></h4>
         </div>
       </div>
     <% end %>

@@ -1,12 +1,35 @@
-<p>ジャンル詳細ページ</p>
-<p>ジャンルに関連するアーティストを一覧表示</p>
-
 <div class="container my-5">
-  <div class="row">
-    <div class="col-md-6 text-center">
-      <%= image_tag @genre.image.variant(resize: "350x350"), class: "img-fluid rounded", alt: @genre.name %>
+  <h2 class="mb-4 text-center"><%= @genre.name %> に関連するアーティスト</h2>
+
+  <% if @genre.artists.any? %>
+    <div class="row">
+      <% @genre.artists.each do |artist| %>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm d-flex flex-row">
+            <!-- アーティスト画像 -->
+            <div class="d-flex align-items-center p-3">
+              <% if artist.artist_image.attached? %>
+                <%= image_tag artist.artist_image.variant(resize: "100x100").processed, class: "rounded-circle", alt: artist.name %>
+              <% else %>
+                <%= image_tag "Vibin_no_image.jpg", class: "rounded-circle", size: "100x100", alt: artist.name %>
+              <% end %>
+            </div>
+
+            <!-- アーティスト情報 -->
+            <div class="card-body">
+              <h5 class="card-title mb-1"><%= link_to artist.name, artist_path(artist), class: "text-dark text-decoration-none" %></h5>
+              <p class="card-text small text-muted mb-2"><%= truncate(artist.introduction, length: 80) %></p>
+
+              <div class="d-flex flex-column">
+                <small>関連投稿数： <%= artist.posts.count %></small>
+                <small>関連グループ数： <%= artist.groups.count %></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-
-
-  </div>
+  <% else %>
+    <p class="text-center">このジャンルに関連するアーティストはまだ登録されていません。</p>
+  <% end %>
 </div>

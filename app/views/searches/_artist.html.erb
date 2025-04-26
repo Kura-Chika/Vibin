@@ -1,0 +1,28 @@
+<table class="table table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>種別</th>
+      <th>アーティスト名</th>
+      <th>紹介文</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |artist| %>
+      <tr>
+        <td>
+          <span class="badge bg-info">
+            <i class="bi bi-music-note-beamed"></i> アーティスト
+          </span>
+        </td>
+        <td>
+          <% if admin_signed_in? %> <!-- 管理者用 -->
+            <%= link_to artist.name, admin_artist_path(artist), class: 'text-dark fw-bold' %>
+          <% else %> <!-- ユーザー用 -->
+            <%= link_to artist.name, artist_path(artist), class: 'text-dark fw-bold' %>
+          <% end %>
+        </td>
+        <td><%= truncate(artist.introduction, length: 50) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

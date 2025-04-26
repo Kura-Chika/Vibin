@@ -1,93 +1,33 @@
-<div class='container'>
+<div class="container mt-4">
   <div class="row">
-    <% if @search_type == 'User' %>
-      <h4 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">
-        "<%= @query %>" で 会員を検索
-      </h4>
-    <% else @search_type == 'Post' %>
-      <h4 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">
-        "<%= @query %>" で 投稿を検索
-      </h4>
-    <% end %>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <% if @results.any? %>
-        <table class ="table">
-          <!-- 会員についての検索結果 -->
-          <% if @search_type == 'User' %>
-            <thead style="background-color: #f1f1f1; color: #333;">
-              <tr>
-                <th>会員ID</th>
-                <th>ニックネーム</th>
-                <th>メールアドレス</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @results.each do |result| %>
-                <tr>
-                  <td>
-                    <%= result.id %>
-                  </td>
-                  <td>
-                    <%= link_to "result.nickname", admin_user_path(result), class: 'text-dark' %>
-                  </td>
-                  <td>
-                    <%= result.email %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          <!-- 商品についての検索結果 -->
-          <% elsif @search_type == 'PostPost' %>
-            <!-- 管理者ログイン時 -->
-            <% if admin_signed_in? %>
-              <thead style="background-color: #f1f1f1; color: #333;">
-                <tr>
-                  <th>投稿ID</th>
-                  <th>タイトル</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @results.each do |result| %>
-                  <tr>
-                    <td class="align-middle">
-                      <%= result.id %>
-                    </td>
-                    <td class="align-middle">
-                      <%= link_to admin_post_path(result.id), class: 'text-dark' do %>
-                        <%= result.title %>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            <!-- 会員ログインまたは未ログイン時 -->
-            <% else %>
-              <thead style="background-color: #f1f1f1; color: #333;">
-                <tr>
-                  <th>タイトル</th>
-                  <th>投稿内容</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @pub_results.each do |result| %>
-                  <tr>
-                    <td style="white-space: nowrap;">
-                      <%= image_tag result.post_image, size: "40x40" %>
-                      <%= link_to result.title, post_path(result.id) %>
-                    </td>
-                    <td>
-                      <%= result.body %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            <% end %>
-          <% end %>
-        </table>
-      <% else %>
-        <p>該当する結果は見つかりませんでした。</p>
+    <div class="col-12">
+      <div class="alert alert-secondary mb-4">
+        「<%= @query %>」の検索結果：<%= @search_type_ja %>
+      </div>
+      
+      <% if @results.present? %> <!-- 結果があるかどうか -->
+        <div class="mb-3">
+          <span class="badge bg-primary" style="font-size: 1rem;">
+            ヒット件数：<%= @results.count %> 件
+          </span>
+        </div>
+        <% case @search_type %>
+        <% when 'User' %>
+          <%= render 'searches/user', results: @results %>
+        <% when 'Post' %>
+          <%= render 'searches/post', results: @results %>
+        <% when 'Artist' %>
+          <%= render 'searches/artist', results: @results %>
+        <% when 'Comment' %>
+          <%= render 'searches/comment', results: @results %>
+        <% end %>
+      <% else %> <!-- 該当する結果がない場合 -->
+        <div class="text-center p-5">
+          <i class="bi bi-emoji-frown" style="font-size: 3rem; color: #ccc;"></i>
+          <h4 class="mt-3" style="color: #777;">該当する結果は見つかりませんでした</h4>
+          <p class="mt-2" style="color: #aaa;">検索ワードを変えて再検索してみてください。</p>
+          <%= link_to "トップに戻る", root_path, class: "btn btn-primary rounded-pill mt-4" %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -16,9 +16,15 @@ class User < ApplicationRecord
 
   # 検索機能
   scope :search_by_fullname, ->(query, match_type) {
-    case match_type
-    when 'partial' then where("nickname LIKE ?", "%#{query}%")
-    else all
+    if query.present?
+      case match_type
+      when 'partial'
+        where("nickname LIKE ?", "%#{query}%")
+      else # 完全一致
+        where(nickname: query)
+      end
+    else
+      all
     end
   }
   

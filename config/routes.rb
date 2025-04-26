@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   
   # カレンダー機能
   resources :events, only: [:index]
+  
   # 検索機能
   get 'search', to: 'searches#search'
 

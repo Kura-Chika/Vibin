@@ -1,0 +1,26 @@
+<table class="table table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>種別</th>
+      <th>コメント内容</th>
+      <th>投稿者</th>
+      <th>投稿タイトル</th>
+      <th>コメント日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |comment| %>
+      <tr>
+        <td>
+          <span class="badge bg-warning text-dark">
+            <i class="bi bi-chat-text"></i> コメント
+          </span>
+        </td>
+        <td><%= truncate(comment.body, length: 50) %></td>
+        <td><%= link_to comment.user.nickname, admin_user_path(comment.user), class: 'text-dark fw-bold' %></td>
+        <td><%= link_to comment.post.title, admin_post_path(comment.post), class: 'text-dark' %></td>
+        <td><%= comment.created_at.strftime("%Y/%m/%d") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -11,12 +11,8 @@
         <h3 class="mb-2"><%= @group.name %></h3>
         <p class="mb-2"><%= @group.introduction %></p>
         <p class="mb-2 text-muted"><strong>関連アーティスト：</strong> <%= @group.artists_name %></p>
-        <p class="mb-0"><strong>参加メンバー（<%= @group.users.count %>人)：</strong></p>
-        <ul class="mb-2">
-          <% @group.users.each do |user| %>
-            <li><%= user.nickname %></li>
-          <% end %>
-        </ul>
+        <h4><span class="badge bg-secondary rounded-pill px-3"><%= @group.users.count %>人参加中</span></h4>
+        メンバー：<%= @group.users.map(&:nickname).join(" , ") %>
         
         <!-- 編集・参加ボタン -->
         <div class="d-flex justify-content-end">

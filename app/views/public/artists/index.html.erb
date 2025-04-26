@@ -12,7 +12,7 @@
         <!-- 情報部分 -->
         <div class="flex-grow-1 ml-3">
           <h5 class="mb-1"><%= artist.name %></h5>
-          <p class="mb-1 text-muted"><strong>ジャンル：</strong><%= artist.genre %></p>
+          <p class="mb-1 text-muted"><strong>ジャンル：</strong><%= artist.genre.name %></p>
           <p class="mb-2"><%= artist.introduction.truncate(80) %></p>
           <!-- 投稿数・グループ数 -->
           <div class="text-muted small">

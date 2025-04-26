@@ -1,0 +1,28 @@
+<table class="table table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>種別</th>
+      <th>タイトル</th>
+      <th>投稿内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |post| %>
+      <tr>
+        <td>
+          <span class="badge bg-success">
+            <i class="bi bi-file-earmark-text-fill"></i> 投稿
+          </span>
+        </td>
+        <td>
+          <% if admin_signed_in? %> <!-- 管理者用 -->
+            <%= link_to post.title, admin_post_path(post), class: 'text-dark fw-bold' %>
+          <% else %> <!-- ユーザー用 -->
+            <%= link_to post.title, post_path(post), class: 'text-dark fw-bold' %>
+          <% end %>
+        </td>
+        <td><%= truncate(post.body, length: 50) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

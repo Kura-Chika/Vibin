@@ -1,23 +1,23 @@
-<p>ジャンル一覧</p>
-<p>各ジャンル名をクリックで詳細ページへ</p>
+<div class="container my-5">
+  <h2 class="text-center mb-4">すべてのジャンル</h2>
+  <p class="text-center text-muted">ジャンル名をクリックすると、詳細ページへ移動します。</p>
 
-<h5 class="text-left"><strong>ジャンル一覧</strong><span></span></h5>
-<div class="row justify-content-center">
-  #<% @genres.each do |genre| %>
-    #<div class="col-md-3 col-sm-6 col-12 text-center">
-      <!-- ジャンルイメージ variant：サイズ変更 processed：未処理画像でもエラーにならないようにする -->
-      #<%= link_to genre_path(genre) do %>
-        #<%= image_tag genre.image.variant(resize: "200x200").processed %>
-      #<% end %><br>
+  <div class="row">
+    <% @genres.each do |genre| %>
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <%= link_to genre_path(genre), class: "text-decoration-none text-dark" do %>
+            <div class="card-body">
+              <h5 class="card-title"><%= genre.name %></h5>
+              <p class="card-text text-muted">関連アーティスト数： <%= genre.artists.count %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-      #<%= genre.name %><br>
-
-    #</div>
-  #<% end %>
-
-</div>
-<div class="row justify-content-center">
-  <div class="d-flex justify-content-center">
-    <%= paginate @genres %>
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @genres, theme: 'bootstrap-5' %>
   </div>
 </div>

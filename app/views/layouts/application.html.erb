@@ -12,13 +12,22 @@
   </head>
 
   <body class="d-flex flex-column vh-100">
-    <%= render 'layouts/header' %>
-    <% flash.each do |message_type, message| %> 
+    <%= render 'layouts/header' %> <!-- ヘッダー -->
+    <% flash.each do |message_type, message| %> <!-- フラッシュメッセージ -->
       <div class="flash-message <%= message_type %>"><%= message %></div>
     <% end %>
     <main class="mb-auto">
-    <%= yield %>
+      <div class="custom-container container-fluid mt-4">
+        <div class="row">
+          <div class="col-md-3">
+            <%= render 'layouts/sidebar' %> <!-- サイドバー -->
+          </div>
+          <div class="col-md-9">
+            <%= yield %> <!-- メインコンテンツ -->
+          </div>
+        </div>
+      </div>
     </main>
-    <%= render 'layouts/footer' %>
+    <%= render 'layouts/footer' %> <!-- フッター -->
   </body>
 </html>

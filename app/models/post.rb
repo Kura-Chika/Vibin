@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_one_attached :post_image
 
   def artists_name
-    artists.pluck(:name).join(" / ")
+    artists.pluck(:name).join(" , ")
   end
 
   def goods_by?(user) # 現在ログインしているユーザーによっていいねされているかの確認
@@ -25,9 +25,15 @@ class Post < ApplicationRecord
 
   # 検索機能
   scope :search_by_name, ->(query, match_type) {
-    case match_type
-    when 'partial' then where("CONCAT(title, body) LIKE ?", "%#{query}%")
-    else all
+    if query.present?
+      case match_type
+      when 'partial'
+        where("title LIKE :q OR body LIKE :q", q: "%#{query}%")
+      else
+        where("title = :q OR body = :q", q: query)
+      end
+    else
+      all
     end
   }
 
