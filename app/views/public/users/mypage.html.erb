@@ -6,9 +6,7 @@
       <div class="col-md-4 text-center">
         <%= image_tag @user.user_image.attached? ? url_for(@user.user_image) : "Vibin_no_image.jpg", class: "img-fluid rounded-0 shadow-sm", style: "max-width: 100%; height: auto;", alt: @user.nickname %>
       </div>
-          
-        
-
+      
       <!-- 右：メール、自己紹介 -->
       <div class="col-md-8">
         <h5><strong>メールアドレス：</strong> <%= @user.email %></h5>

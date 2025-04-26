@@ -2,50 +2,67 @@
   <div class="card-body">
     <h5 class="card-title text-center mb-2">メニュー</h5>
     <ul class="list-group text-center list-group-flush">
-      <li class="list-group-item"><%= link_to 'マイページ', mypage_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'すべての投稿', posts_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'すべてのユーザー', users_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'すべてのグループ', groups_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'すべてのジャンル', genres_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'すべてのアーティスト', artists_path, class: "text-decoration-none" %></li>
-      <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none" %></li>
+      <% if admin_signed_in? %>
+        <li class="list-group-item"><%= link_to 'すべての投稿', admin_posts_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのユーザー', admin_users_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのグループ', admin_groups_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのジャンル', admin_genres_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのアーティスト', admin_artists_path, class: "text-decoration-none" %></li>
+      <% elsif user_signed_in? %>
+        <li class="list-group-item"><%= link_to 'マイページ', mypage_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべての投稿', posts_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのユーザー', users_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのグループ', groups_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのジャンル', genres_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのアーティスト', artists_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none" %></li>
+      <% else %> <!-- 未ログイン時 -->
+        <li class="list-group-item"><%= link_to 'マイページ', mypage_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべての投稿', posts_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのジャンル', genres_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのアーティスト', artists_path, class: "text-decoration-none" %></li>
+      <% end %>
     </ul>
 
     <!-- 検索フォーム -->
-    <%= form_with url: search_path, method: :get, local: true do |f| %>
-      <%= f.text_field :query, required: true, class: "form-control rounded my-2", placeholder: "検索ワードを入力" %>
-      <% if admin_signed_in? %>
-        <%= f.select :search_type, [['ユーザー', 'User'], ['投稿', 'Post'], ['アーティスト', 'Artist'], ['コメント', 'Comment']], class: "my-2" %>
-      <% else %>
-        <%= f.select :search_type, [['ユーザー', 'User'], ['投稿', 'Post'], ['アーティスト', 'Artist']], class: "my-2" %>
+    <% if user_signed_in? || admin_signed_in? %>
+      <%= form_with url: search_path, method: :get, local: true do |f| %>
+        <%= f.text_field :query, required: true, class: "form-control rounded my-2", placeholder: "検索ワードを入力" %>
+        <% if admin_signed_in? %>
+          <%= f.select :search_type, [['ユーザー', 'User'], ['投稿', 'Post'], ['アーティスト', 'Artist'], ['コメント', 'Comment']], class: "my-2" %>
+        <% else %>
+          <%= f.select :search_type, [['ユーザー', 'User'], ['投稿', 'Post'], ['アーティスト', 'Artist']], class: "my-2" %>
+        <% end %>
+        <%= f.hidden_field :match_type, value: 'partial' %>
+        <%= f.submit "これで検索", class: "btn btn-outline-primary rounded-pill ml-3 my-2" %>
       <% end %>
-      <%= f.hidden_field :match_type, value: 'partial' %>
-      <%= f.submit "これで検索", class: "btn btn-outline-primary rounded-pill ml-3 my-2" %>
     <% end %>
   </div>
 </div>
 
-<div class="border shadow-sm mb-4">
-  <div class="card-body">
-    <h5 class="card-title text-center mb-2">今週の予定</h5>
-    <table class="table table-sm">
-      <tbody>
-        <% (Date.today.beginning_of_week..Date.today.end_of_week).each do |day| %>
-          <tr class="<%= 'table-primary' if day == Date.today %>">
-            <td class="text-muted small"><%= day.strftime("%m/%d (%a)") %></td>
-            <td>
-              <% events = @events.select { |e| e.start.to_date == day } %> <!-- その日のイベント抽出 -->
-              <% if events.any? %>
-                <% events.each do |event| %>
-                  <div class="badge bg-primary mb-1"><%= event.title %></div><br>
+<% if user_signed_in? %>
+  <div class="border shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title text-center mb-2">今週の予定</h5>
+      <table class="table table-sm">
+        <tbody>
+          <% (Date.today.beginning_of_week..Date.today.end_of_week).each do |day| %>
+            <tr class="<%= 'table-primary' if day == Date.today %>">
+              <td class="text-muted small"><%= day.strftime("%m/%d (%a)") %></td>
+              <td>
+                <% events = @events.select { |e| e.start.to_date == day } %> <!-- その日のイベント抽出 -->
+                <% if events.any? %>
+                  <% events.each do |event| %>
+                    <div class="badge bg-primary mb-1"><%= event.title %></div><br>
+                  <% end %>
+                <% else %>
+                  <span class="text-muted small">予定なし</span>
                 <% end %>
-              <% else %>
-                <span class="text-muted small">予定なし</span>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+<% end %>

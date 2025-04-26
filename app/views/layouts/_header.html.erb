@@ -1,8 +1,15 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <% nav_class=if admin_signed_in? 
+      "navbar navbar-expand-lg admin-header"
+    elsif user_signed_in? 
+      "navbar navbar-expand-lg user-header"
+    else 
+      "navbar navbar-expand-lg guest-header" 
+    end %>
+    <nav class="<%= nav_class %>">
     <div class="container-fluid">
       <!-- ロゴのリンク先 -->
-      <div class="row justify-content-start">
+      <div class="row justify-content-start ml-5">
       <% if admin_signed_in? %>
         <%= link_to admin_posts_path do %>
           <%= image_tag 'Vibin_logo5.jpg', width: 250, height: 100, class: "img-resize rounded " %>
@@ -26,22 +33,12 @@
               <% if admin_signed_in? %>
                 <li>
                   <%= link_to admin_users_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-cake-candles"></i> 会員一覧
+                    <i class="fa-solid fa-clipboard-user"></i> すべてのユーザー
                   <% end %>
                 </li>
-                <li>
-                  <%= link_to admin_artists_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-users"></i> アーティスト一覧
-                  <% end %>
-                </li>
-                <li>
-                  <%= link_to admin_groups_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-barcode"></i> グループ一覧
-                  <% end %>
-                  </li>
                 <li>
                   <%= link_to admin_posts_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-shapes"></i> 投稿一覧
+                    <i class="fa-solid fa-folder-plus"></i> すべての投稿
                   <% end %>
                 </li>
                 <li>
@@ -56,16 +53,6 @@
                   <% end %>
                 </li>
                 <li>
-                  <%= link_to posts_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-paste"></i> 投稿一覧
-                  <% end %>
-                </li>
-                <li>
-                  <%= link_to artists_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-users"></i> アーティスト一覧
-                  <% end %>
-                </li>
-                <li>
                   <%= link_to new_post_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
                     <i class="fa-solid fa-square-plus"></i> 新規投稿
                   <% end %>
@@ -75,14 +62,10 @@
                     <i class="fa-solid fa-right-from-bracket"></i> ログアウト
                   <% end %>
                 </li>
-              <% else %>
+              <% else %> <!-- 未ログイン時 -->
                 <li>
                   <%= link_to about_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
                     <i class="fa-solid fa-house"></i> About
-                  <% end %>
-                <li>
-                  <%= link_to posts_path, class: 'btn btn-outline-secondary mx-1 my-1' do %>
-                    <i class="fa-solid fa-paste"></i> 投稿一覧
                   <% end %>
                 </li>
                 <li>

@@ -24,7 +24,7 @@
           <% if admin_signed_in? %>
             <%= link_to user.nickname, admin_user_path(user), class: 'text-dark fw-bold' %>
           <% else %>
-            <%= link_to user.nickname, user_path(user), class: 'text-dark fw-bold' %>
+            <%= link_to user.nickname, (user == current_user ? mypage_path : user_path(user)), class: 'text-dark fw-bold' %>
           <% end %>
         </td>
         <% if admin_signed_in? %>

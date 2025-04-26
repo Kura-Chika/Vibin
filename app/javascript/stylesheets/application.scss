@@ -130,7 +130,21 @@ preview {
   padding: 0 15px;
 }
 
+// ヘッダーフッター
+.admin-header,
+.admin-footer{
+  background-color: #ff6b6b; 
+}
 
+.user-header,
+.user-footer{
+  background-color: #4dabf7; 
+}
+
+.guest-header,
+.guest-footer{
+  background-color: #ccc; 
+}
 
 
 @import '~bootstrap/scss/bootstrap';
