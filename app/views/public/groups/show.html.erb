@@ -9,20 +9,34 @@
       <!-- グループ情報 -->
       <div class="flex-grow-1 ml-3">
         <h3 class="mb-2"><%= @group.name %></h3>
+        <i class="far fa-clock"></i><%= @group.owner.nickname %>が
+          <%= @group.created_at.strftime('%Y/%m/%d') %>に作成
         <p class="mb-2"><%= @group.introduction %></p>
         <p class="mb-2 text-muted"><strong>関連アーティスト：</strong> <%= @group.artists.pluck(:name).join(" , ") %></p>
         <h4><span class="badge bg-secondary rounded-pill px-3"><%= @group.users.count %>人参加中</span></h4>
         メンバー：<%= @group.users.map(&:nickname).join(" , ") %>
         
-        <!-- 編集・参加ボタン -->
+        <!-- 編集・参加申請ボタン -->
+        <% permit = @group.permits.find_by(user_id: current_user.id) %>
         <div class="d-flex justify-content-end">
           <% if @group.owner_id == current_user.id %>
-            <%= link_to '編集する', edit_group_path(@group), class: "btn btn-outline-success rounded-pill px-4" %>
+            <div>
+              <%= link_to '承認待ち一覧', permits_list_group_path(@group),  class: "btn btn-success rounded-pill" %>
+              <%= link_to '編集する', edit_group_path(@group),  class: "btn btn-success rounded-pill" %>
+            </div>
           <% elsif current_user.email != "guest@example.com" %>
-            <% if @group.includesUser?(current_user) %>
+            <% if @group.group_users.exists?(user_id: current_user.id) || (permit && permit.status == "approved") %>
+              <!-- グループに参加、または申請が承認されている場合にグループを抜けるボタンを表示 -->
               <%= link_to 'グループを抜ける', group_group_users_path(@group), method: :delete, class: "btn btn-outline-danger rounded-pill mb-2" %>
+            <% elsif permit %>
+              <% if permit.status == "pending" %>
+                <%= link_to '申請取消', group_permit_path(@group, permit), method: :delete, class: "btn btn-sm btn-danger" %>
+              <% elsif permit.status == "rejected" %>
+                <p class="alert alert-danger">申請が拒否されました。もう一度参加申請を行ってください。</p>
+                <%= button_to "再申請", reapply_group_permit_path(@group, permit), method: :post, class: "btn btn-primary" %>
+              <% end %>
             <% else %>
-              <%= link_to '参加する', group_group_users_path(@group), method: :post, class: "btn btn-success rounded-pill mb-2" %>
+              <%= link_to '参加申請する', group_permits_path(@group), method: :post, class: "btn btn-success rounded-pill" %>
             <% end %>
           <% end %>
         </div>

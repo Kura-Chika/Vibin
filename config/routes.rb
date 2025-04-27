@@ -41,8 +41,16 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show]
 
     resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+      resources :permits, only: [:index, :create, :update, :destroy]
+      member do
+        get 'permits_list' # グループ単位で申請一覧を見るページ
+        post 'reapply' # 再申請アクション
+      end
       resource :group_users, only: [:create, :destroy]
     end
+    
+    
+
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       resource :goods, only: [:create, :destroy]
       resource :comments, only: [:create, :destroy]

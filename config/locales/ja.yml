@@ -18,6 +18,13 @@ ja:
         introduction: "アーティスト紹介"
       genre:
         name: "ジャンル名"
+    enums:
+      permit:
+        statuses:
+          pending: "申請中"
+          approved: "承認済"
+          rejected: "拒否済"
+
 
 
   date:

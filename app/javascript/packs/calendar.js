@@ -2,8 +2,13 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from "@fullcalendar/list";
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbolinks:load', function() {
+  // カレンダーの表示エレメントを取得
   var calendarEl = document.getElementById('calendar');
+  if (!calendarEl) {
+    return; // カレンダー要素が見つからなかった場合は何もしない
+  }
+  // FullCalendarの初期化
   var calendar = new Calendar(calendarEl, {
     plugins: [dayGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
@@ -11,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     events: '/events.json',
     windowResize: function () { 
       if (window.innerWidth < 991.98) {
-          calendar.changeView('listMonth');
+          calendar.changeView('listMonth'); // スマホサイズでリストビュー
       } else {
-          calendar.changeView('dayGridMonth');
+          calendar.changeView('dayGridMonth'); // PCサイズで月ごとのグリッドビュー
       }
     },
   });

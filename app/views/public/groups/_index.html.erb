@@ -11,7 +11,9 @@
         <h5 class="mb-1">
           <%= link_to group.name, group_path(group), class: "text-decoration-none text-dark" %>
         </h5>
-        <p class="mb-2"><%= group.introduction.truncate(80) %></p>
+        <i class="far fa-clock"></i><%= group.owner.nickname %>が
+          <%= group.created_at.strftime('%Y/%m/%d') %>に作成
+        <p class="mb-2"><%= (group.introduction || "").truncate(80) %></p>
         <div class="text-muted mb-1">
           関連アーティスト：<%= group.artists.pluck(:name).join(" , ") %><br>
         </div>
@@ -19,13 +21,6 @@
           <h4><span class="badge bg-secondary rounded-pill px-3"><%= group.users.count %>人参加中</span></h4>
           メンバー：<%= group.users.map(&:nickname).join(" , ") %>
         </div>
-        
-        <!-- オーナーなら編集 -->
-        <% if group.owner_id == current_user.id %>
-          <div class="d-flex justify-content-end">
-            <%= link_to '編集する', edit_group_path(group), class: "btn btn-sm btn-outline-success rounded-pill px-4" %>
-          </div>
-        <% end %>
       </div>
     </div>
   <% end %>

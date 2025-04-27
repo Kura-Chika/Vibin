@@ -9,6 +9,7 @@ class Public::GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @permit = @group.permits.find_by(user_id: current_user.id) # 現在のユーザーの申請を取得
   end
 
   def new
@@ -16,13 +17,14 @@ class Public::GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(group_params)
+    @group = current_user.owned_groups.new(group_params)
     # 誰が作ったグループかを判断するため
     @group.owner_id = current_user.id
+    @group.users << current_user
     if @group.save
       redirect_to groups_path
     else
-      render 'new'
+      render 'index'
     end
   end
 
@@ -39,6 +41,20 @@ class Public::GroupsController < ApplicationController
     end
   end
 
+  def permits_list
+    @group = Group.find_by(id: params[:id])
+    unless @group
+      redirect_to root_path, alert: "グループが存在しません。"
+      return
+    end
+
+    if @group.owner_id != current_user.id
+      redirect_to root_path, alert: "権限がありません。"
+      return
+    end
+    @permits = @group.permits.includes(:user) # 申請中だけ
+  end
+
   private
 
   def group_params
@@ -49,7 +65,7 @@ class Public::GroupsController < ApplicationController
   def ensure_correct_user
     @group = Group.find(params[:id])
     unless @group.owner_id == current_user.id
-      redirect_to groups_path
+      redirect_to groups_path(@group), alert: "グループオーナーのみ編集できます。"
     end
   end
 

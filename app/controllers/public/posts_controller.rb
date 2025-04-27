@@ -5,7 +5,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).per(9)
+    @posts = Post.joins(:user).where(users: { is_active: true }).page(params[:page]).per(9)
     @user = current_user
   end
 
@@ -24,8 +24,12 @@ class Public::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @user = @post.user
-    @comment = Comment.new
+    if @post.user.is_active
+      @user = @post.user
+      @comment = Comment.new
+    else
+      redirect_to posts_path, alert: "投稿したユーザーは退会済みです。"
+    end
   end
 
   def edit

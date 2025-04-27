@@ -1,0 +1,36 @@
+<h2 class="border-bottom pb-2 mb-3 text-center fw-bold"><%= @group.name %>の申請一覧</h2>
+
+<% if @permits.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ユーザー名</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @permits.each do |permit| %>
+        <tr>
+          <td><%= permit.user.nickname %></td>
+          <td>
+            <% if permit.pending? %>
+              <%= button_to group_permit_path(@group, permit), method: :patch, params: { status: "approved" }, class: "btn btn-success btn-sm my-2" do %>
+                承認
+              <% end %>
+              <%= button_to group_permit_path(@group, permit), method: :patch, params: { status: "rejected" }, class: "btn btn-danger btn-sm my-2" do %>
+                拒否
+              <% end %>
+              
+            <% elsif permit.approved? %>
+              <span class="badge bg-success">承認済み</span>
+            <% else %>
+              <span class="badge bg-secondary">拒否済み</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>現在、申請はありません。</p>
+<% end %>

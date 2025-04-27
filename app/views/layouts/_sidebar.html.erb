@@ -17,7 +17,7 @@
         <li class="list-group-item"><%= link_to 'すべてのジャンル', genres_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのアーティスト', artists_path, class: "text-decoration-none" %></li>
         <% unless current_user.email == "guest@example.com" %>
-          <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none" %></li>
+          <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none", data: {"turbolinks" => false} %></li>
         <% end %>
       <% else %> <!-- 未ログイン時 -->
         <li class="list-group-item"><%= link_to 'マイページ', mypage_path, class: "text-decoration-none" %></li>
@@ -44,7 +44,7 @@
 </div>
 
 <% if user_signed_in? %>
-  <div class="border shadow-sm mb-4">
+  <div class="border shadow-sm mb-4" id="sidebar-weekly-schedule">
     <div class="card-body">
       <h5 class="card-title text-center mb-2">今週の予定</h5>
       <table class="table table-sm">
@@ -53,10 +53,10 @@
             <tr class="<%= 'table-primary' if day == Date.today %>">
               <td class="text-muted small"><%= day.strftime("%m/%d (%a)") %></td>
               <td>
-                <% events = @events.select { |e| e.start.to_date == day } %> <!-- その日のイベント抽出 -->
+                <% events = @events.select { |e| e[:start] == day.to_date } %> <!-- その日のイベント抽出 -->
                 <% if events.any? %>
                   <% events.each do |event| %>
-                    <div class="badge bg-primary mb-1"><%= event.title %></div><br>
+                    <div class="badge bg-primary mb-1"><%= link_to event[:title], event[:url] %></div><br>
                   <% end %>
                 <% else %>
                   <span class="text-muted small">予定なし</span>
@@ -69,3 +69,14 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  // Turbolinksを無効化して、ページ遷移後に再描画
+  document.addEventListener('turbolinks:load', function() {
+    var sidebarSchedule = document.getElementById('sidebar-weekly-schedule');
+    if (sidebarSchedule) {
+      // サイドバーがロードされた時に適切な処理を行う
+      // 必要に応じてJavaScriptで追加処理を行う
+    }
+  });
+</script>
