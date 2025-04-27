@@ -1,7 +1,6 @@
 class EventsController < ApplicationController
   def index
     @posts = current_user.posts # current_user の投稿を取得
-
     # 投稿の日付とタイトルをカレンダー用に整形
     @events = @posts.map do |post|
       {
@@ -16,7 +15,7 @@ class EventsController < ApplicationController
       format.json { render json: @events.as_json(include: :user) }  # JSON形式で返す
     end
   end
-  
+
   private
   
   def set_events
