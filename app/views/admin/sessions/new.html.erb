@@ -1,37 +1,29 @@
-<div class="container-fluid position-relative">
-  <div class="row align-items-center justify-content-center">
-    <div class="col-lg-6 col-md-8">
-      <h5 class="d-inline-block p-2 m-4" style="background-color: #E0E0E0; color: #333;">管理者ログイン</h5>
+<div class="container-fluid d-flex align-items-center justify-content-center">
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
 
+    <h5 class="text-center mb-4" style="background-color: #E0E0E0; color: #333; padding: 10px; border-radius: 5px;">
+      管理者ログイン
+    </h5>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+      <!-- メールアドレス -->
+      <div class="form-group mb-3">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class:"form-control" %>
+      </div>
 
-        <!-- メールアドレス -->
-        <div class="form-group row">
-          <label class="col-4 col-form-label">メールアドレス</label>
-          <div class="col-8">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class:"form-control" %>
-          </div>
-        </div>
+      <!-- パスワード -->
+      <div class="form-group mb-3">
+        <%= f.label :password, "パスワード", class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "current-password", class:"form-control" %>
+      </div>
 
-        <!-- パスワード -->
-        <div class="form-group row">
-          <label class="col-4 col-form-label">パスワード</label>
-          <div class="col-8">
-            <%= f.password_field :password, autocomplete: "current-password", class:"form-control" %>
-          </div>
-        </div>
+      <!-- ログインボタン -->
+      <div class="form-group mb-4 d-flex justify-content-center">
+        <%= f.submit "ログイン", class: "btn btn-primary rouded-pill w-50" %>
+      </div>
 
-        <!-- ログインボタン -->
-        <div class="form-group row">
-          <div class="col-sm-8 offset-sm-4">
-            <%= f.submit "ログイン", class: "btn btn-primary w-50" %>
-          </div>
-        </div>
-
-      <% end %>
-
-      <%= render "admin/shared/links" %>
-
-    </div>
+    <% end %>
+    <%= render "admin/shared/links" %>
   </div>
+</div>

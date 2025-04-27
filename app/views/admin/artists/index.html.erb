@@ -1,30 +1,41 @@
-<div class="container-fluid position-relative">
+<div class="container my-5">
   <div class="row justify-content-center">
-    <div class="col-lg-10 col-md-8">
-      <h5>アーティスト一覧・追加</h5>
-      <%= render 'admin/artists/form', artist: @artist, btntxt: @btn_text %>
-  <div class="justify-content-center mt-4">
-  <div class="col-6">
-    <table class="table">
-      <thead style="background-color: #E0E0E0; color: #333;">
-        <tr>
-          <th>画像</th>
-          <th>アーティスト名</th>
-          <th>紹介文</th>
-          <th></th>
-        </tr>
-      </thead>
-    <tbody>
-       <% @artists.each do |artist| %>
-        <tr>
-          <td><%= image_tag artist.artist_image, size: "300x300", class: "img-fluid rounded shadow-sm", alt: "アーティスト画像" %></td>
-          <td><%= artist.name %></td>
-          <td><%= artist.introduction %></td>
-          <td><%= link_to "編集する", edit_admin_artist_path(artist), class:"btn btn-success" %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <div class="col-lg-8 col-md-10">
+      <h2 class="text-center mb-4 border-bottom pb-2">アーティスト管理</h2>
+
+      <!-- アーティスト作成フォーム -->
+      <div class="card shadow-sm p-4 mb-5">
+        <h5 class="mb-3">アーティストを追加</h5>
+        <%= render 'admin/artists/form', artist: @artist, btntxt: @btn_text %>
+      </div>
+
+      <!-- アーティスト一覧 -->
+      <div class="row">
+        <% @artists.each do |artist| %>
+          <div class="col-md-6 mb-4">
+            <div class="shadow-sm h-100">
+              <% if artist.artist_image.attached? %>
+                <%= image_tag artist.artist_image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+              <% else %>
+                <%= image_tag "Vibin_no_image.jpg", class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= artist.name %></h5>
+                <p class="card-text text-muted mb-2">
+                  ジャンル: <%= artist.genre&.name || "未設定" %>
+                </p>
+                <p class="card-text" style="height: 60px; overflow-y: auto;">
+                  <%= artist.introduction %>
+                </p>
+                <div class="text-end">
+                  <%= link_to "編集", edit_admin_artist_path(artist), class: "btn btn-outline-success btn-sm rounded-pill px-3" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
   </div>
-</div>
 </div>

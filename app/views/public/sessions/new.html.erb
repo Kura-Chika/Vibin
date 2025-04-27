@@ -1,44 +1,45 @@
-<div class=" container">
-  <div class="row">
-    <div class="col-lg-4">
-      <h5 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">ログイン</h5>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-8">
-      <h6 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">会員の方はこちらからログイン</h6>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <%= render "public/shared/error_messages", resource: resource %>
-        <table class="w-100">
-          <tr>
-            <th class="field pb-2 text-end pe-3" style="width: 20%;">メールアドレス</th>
-            <td class="pb-2 w-100 ">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class: "form-control rounded w-100"%>
-            </td>
-          </tr>
-          <tr>
-            <th class="field pb-4 text-end pe-3" style="width: 20%;">パスワード</th>
-            <td class="pb-4 w-100">
-              <%= f.password_field :password, autocomplete: "current-password", class: "form-control rounded w-100" %>
-            </td>
-          </tr>
-          <tr>
-            <th></th>
-            <td>
-              <%= f.submit "ログイン", class: "btn btn-primary w-50" %>
-            </td>
-          </tr>
-        </table>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-4">
-      <h6 class="d-inline-block p-2 m-4", style="background-color: #e0e0e0; color: #333;">会員登録がお済みでない方</h6></br>
-      <strong><%= link_to "こちら", new_user_registration_path %> から新規登録を行ってください。</strong>
-    </div>
-    <div>
-      <%= link_to "お試しはこちら ♪", users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
+    <h5 class="text-center mb-4" style="background-color: #E0E0E0; color: #333; padding: 10px; border-radius: 5px;">
+      ログイン
+    </h5>
+
+    <!-- サブタイトル -->
+    <h6 class="text-center mb-4" style="color: #333;">
+      ユーザーの方はこちらからログイン
+    </h6>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+      
+      <!-- エラーメッセージ表示 -->
+      <%= render "public/shared/error_messages", resource: resource %>
+
+      <!-- メールアドレス -->
+      <div class="form-group mb-3">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class: "form-control" %>
+      </div>
+
+      <!-- パスワード -->
+      <div class="form-group mb-3">
+        <%= f.label :password, "パスワード", class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+      </div>
+
+      <div class="form-group my-4 d-flex justify-content-center">
+        <%= f.submit "ログイン", class: "btn btn-primary rounded-pill w-50" %>
+      </div>
+
+    <% end %>
+
+    <!-- 会員登録リンク -->
+    <div class="text-center mb-4">
+      <h6 style="color: #333;">ユーザー登録がお済みでない方</h6>
+      <div class="d-flex justify-content-between text-center my-3">
+        <%= link_to "♬ 新規登録して今すぐ参加", new_user_registration_path, class: "btn btn-secondary btn-sm rounded-pill" %>
+        <!-- ゲストログイン -->
+        <%= link_to "♪ ゲストログインで試してみる", users_guest_sign_in_path, class: "btn btn-secondary btn-sm rounded-pill", method: :post %>
+      </div>
     </div>
   </div>
 </div>

@@ -4,6 +4,7 @@
     <ul class="list-group text-center list-group-flush">
       <% if admin_signed_in? %>
         <li class="list-group-item"><%= link_to 'すべての投稿', admin_posts_path, class: "text-decoration-none" %></li>
+        <li class="list-group-item"><%= link_to 'すべてのコメント', admin_comments_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのユーザー', admin_users_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのグループ', admin_groups_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのジャンル', admin_genres_path, class: "text-decoration-none" %></li>
@@ -15,7 +16,9 @@
         <li class="list-group-item"><%= link_to 'すべてのグループ', groups_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのジャンル', genres_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべてのアーティスト', artists_path, class: "text-decoration-none" %></li>
-        <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none" %></li>
+        <% unless current_user.email == "guest@example.com" %>
+          <li class="list-group-item"><%= link_to 'カレンダーをチェック', events_path, class: "text-decoration-none" %></li>
+        <% end %>
       <% else %> <!-- 未ログイン時 -->
         <li class="list-group-item"><%= link_to 'マイページ', mypage_path, class: "text-decoration-none" %></li>
         <li class="list-group-item"><%= link_to 'すべての投稿', posts_path, class: "text-decoration-none" %></li>

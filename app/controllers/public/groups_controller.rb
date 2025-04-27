@@ -1,6 +1,7 @@
 class Public::GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_guest_user, only: [:new, :create]
 
   def index 
     @groups = Group.all
@@ -49,6 +50,12 @@ class Public::GroupsController < ApplicationController
     @group = Group.find(params[:id])
     unless @group.owner_id == current_user.id
       redirect_to groups_path
+    end
+  end
+
+  def ensure_guest_user
+    if current_user.email == "guest@example.com"
+      redirect_to groups_path, alert: "ゲストユーザーはこの操作を行えません。"
     end
   end
 

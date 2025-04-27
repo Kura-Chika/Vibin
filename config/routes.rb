@@ -14,13 +14,15 @@ Rails.application.routes.draw do
   end
   
   namespace :admin do
-    root to: 'homes#top'
+    root to: 'posts#index'
     resources :genres, only: [:index, :create, :edit, :update]
     resources :artists, only: [:index, :create, :edit, :update]
     resources :users, only: [:index, :show, :edit, :update]
-    resources :posts, only: [:index, :destroy]
+    resources :posts, only: [:index, :show, :destroy] do
+      resource :comments, only: [:destroy]
+    end
+    resources :comments, only: [:index] # 全コメントを表示
     resources :groups, only: [:index, :destroy]
-    resources :comments, only: [:index, :destroy]
   end
   
   scope module: :public do

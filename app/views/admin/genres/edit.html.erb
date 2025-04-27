@@ -1,8 +1,13 @@
-<div class="container-fluid position-relative">
+<div class="container my-5">
   <div class="row justify-content-center">
-    <div class="col-lg-10 col-md-8">
-      <h5 class="d-inline-block p-2 m-4" style="background-color: #E0E0E0; color: #333;">
-        ジャンル編集
-      </h5>
+    <div class="col-lg-8 col-md-10">
+      <h2 class="text-center mb-4 border-bottom pb-2">ジャンル管理</h2>
 
-      <%= render 'admin/genres/form', genre: @genre, btntxt: @btn_text %>
+      <!-- ジャンル編集フォーム -->
+      <div class="card shadow-sm p-4 mb-5">
+        <h5 class="mb-3">ジャンルを編集</h5>
+        <%= render 'admin/genres/form', genre: @genre, btntxt: @btn_text %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,33 +1,70 @@
-<div class="row mt-3">
-  <div class="col-auto ">
-    <%= form_with model: artist, url: artist.persisted? ? admin_artist_path : admin_artists_path, method: artist.persisted? ? :patch : :post, class: "form-inline d-flex" do |f| %>
-      <table class="mx-auto">
-          <tr>
-            <th><%= f.label :artist_image, "アーティスト画像" %></th>
-            <td><%= f.file_field :artist_image, accept: "image/*" %></td>
-          </tr>
-          <tr>
-            <th><%= f.label :name, "アーティスト名" %></th>
-            <td><%= f.text_field :name,  placeholder:"アーティスト名", class: "form-control" %></td>
-          </tr>
-          <tr>
-            <th><%= f.label :introduction, "アーティスト紹介" %></th>
-            <td><%= f.text_area :introduction, size: "50x5", placeholder:"ここに紹介を記述します", class: "form-control" %></td>
-          </tr>
-          <tr>
-            <th><%= f.label :genre_id, "ジャンル" %></th>
-            <td>
-              <%= f.collection_select :genre_id, Genre.all, :id, :name, include_blank: "--選択してください--", class: "form-control" %>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" class="text-center">
-              <div class="d-flex justify-content-center">
-                <%= f.submit btntxt, class:"btn btn-success px-4 " %>
-              </div>
-            </td>
-          </tr>
-      </table>
+<div class="row">
+  <div class="col-12">
+    <%= form_with model: artist, url: artist.persisted? ? admin_artist_path(artist) : admin_artists_path, method: artist.persisted? ? :patch : :post, local: true, html: { multipart: true }, class: "p-3" do |f| %>
+      <div class="mb-3 text-center" id="preview-container">
+        <% if artist.artist_image.attached? %>
+          <%= image_tag url_for(artist.artist_image), id: "preview", class: "img-thumbnail", style: "width: 200px; height: 200px; object-fit: cover;" %>
+        <% else %>
+          <p id="preview-text" class="text-muted">画像が選択されていません</p>
+        <% end %>
+      </div>
+
+      
+      <div class="mb-3">
+        <%= f.label :artist_image, "アーティスト画像", class: "form-label" %><br>
+        <%= f.file_field :artist_image, accept: "image/*", onchange: "previewImage(event)" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :name, "アーティスト名", class: "form-label" %>
+        <%= f.text_field :name, class: "form-control", placeholder: "アーティスト名" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :introduction, "アーティスト紹介", class: "form-label" %>
+        <%= f.text_area :introduction, class: "form-control", placeholder: "ここに紹介を記述します", rows: 5 %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :genre_id, "ジャンル", class: "form-label" %>
+        <%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "--選択してください--" }, class: "form-select" %>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit btntxt, class: "btn btn-success rounded-pill px-5" %>
+      </div>
+
     <% end %>
   </div>
 </div>
+
+
+<script> <!-- 画像プレビュー表示 -->
+  function previewImage(event) {
+    const previewContainer = document.getElementById('preview-container');
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        // プレビュー画像がなければ新しく作る
+        let preview = document.getElementById('preview');
+        if (!preview) {
+          preview = document.createElement('img');
+          preview.id = 'preview';
+          preview.className = 'img-thumbnail';
+          preview.style.width = '200px';
+          preview.style.height = '200px';
+          preview.style.objectFit = 'cover';
+          previewContainer.innerHTML = ''; // 文字消す
+          previewContainer.appendChild(preview);
+        }
+        preview.src = reader.result;
+      }
+      reader.readAsDataURL(file);
+    } else {
+      // ファイルが未選択なら、文字に戻す
+      previewContainer.innerHTML = '<p id="preview-text" class="text-muted">画像が選択されていません</p>';
+    }
+  }
+</script>

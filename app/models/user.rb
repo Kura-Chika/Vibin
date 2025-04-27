@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_create :set_active
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -28,6 +30,11 @@ class User < ApplicationRecord
     end
   }
   
+  # 退会しているユーザーはログインできないようにする
+  def active_for_authentication?
+    super && is_active?
+  end
+
   # ゲストログイン
   GUEST_USER_EMAIL = "guest@example.com"
 
@@ -36,6 +43,12 @@ class User < ApplicationRecord
       user.password = SecureRandom.urlsafe_base64
       user.nickname = "guestuser"
     end
+  end
+
+  private
+
+  def set_active
+    self.is_active = true if is_active.nil?
   end
 
 end

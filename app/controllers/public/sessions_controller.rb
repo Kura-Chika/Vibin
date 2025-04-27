@@ -17,7 +17,7 @@ class Public::SessionsController < Devise::SessionsController
   def destroy
     super
   end
-
+  
   protected
   def reject_user
     @user = find_by(email: params[:user][:email])

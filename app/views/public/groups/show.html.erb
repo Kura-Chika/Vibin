@@ -10,7 +10,7 @@
       <div class="flex-grow-1 ml-3">
         <h3 class="mb-2"><%= @group.name %></h3>
         <p class="mb-2"><%= @group.introduction %></p>
-        <p class="mb-2 text-muted"><strong>関連アーティスト：</strong> <%= @group.artists_name %></p>
+        <p class="mb-2 text-muted"><strong>関連アーティスト：</strong> <%= @group.artists.pluck(:name).join(" , ") %></p>
         <h4><span class="badge bg-secondary rounded-pill px-3"><%= @group.users.count %>人参加中</span></h4>
         メンバー：<%= @group.users.map(&:nickname).join(" , ") %>
         
@@ -18,7 +18,7 @@
         <div class="d-flex justify-content-end">
           <% if @group.owner_id == current_user.id %>
             <%= link_to '編集する', edit_group_path(@group), class: "btn btn-outline-success rounded-pill px-4" %>
-          <% else %>
+          <% elsif current_user.email != "guest@example.com" %>
             <% if @group.includesUser?(current_user) %>
               <%= link_to 'グループを抜ける', group_group_users_path(@group), method: :delete, class: "btn btn-outline-danger rounded-pill mb-2" %>
             <% else %>

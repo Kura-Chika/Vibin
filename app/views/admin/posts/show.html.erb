@@ -5,15 +5,17 @@
       <!-- 投稿者情報 -->
       <div class="d-flex align-items-center mb-3">
         <%= image_tag @user.user_image.attached? ? url_for(@user.user_image) : "Vibin_no_image.jpg", class: "rounded-circle me-3", size: "80x80", alt: @user.nickname %>
-        <h3 class="ml-2 mb-0"><%= link_to @user.nickname, (@user == current_user ? mypage_path : user_path(@user)), class: "text-decoration-none text-dark" %></h3>
+        <h3 class="ml-2 mb-0"><%= link_to @user.nickname, admin_user_path(@user), class: "text-decoration-none text-dark" %></h3>
       </div>
 
       <!-- タイトル & いいね & 関連アーティスト-->
       <div class="mb-4">
         <h3 class="fw-bold"><%= @post.title %></h3>
         <div class="d-flex align-items-center">
-          <%= render "public/goods/form", post: @post %>
-          <span class="ml-4"><i class="fa-regular fa-comment-dots"></i>
+          <span class="ml-2"><i class="fas fa-heart"></i>
+            <%= @post.goods.count %>
+          </span>
+          <span class="text-muted ml-2"><i class="fa-regular fa-comment-dots"></i>
             <%= @post.comments.count %>
           </span>
         </div>
@@ -36,19 +38,13 @@
         </div>
       <% end %>
 
-      <!-- 投稿編集ボタン（自分の投稿のみ） -->
-      <% if @user == current_user %>
-        <div class="d-flex gap-3 mb-4">
-          <%= link_to "編集", edit_post_path(@post), class: "btn btn-outline-primary rounded-pill px-3 mr-3" %>
-          <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger rounded-pill px-3" %>
-        </div>
-      <% end %>
-
+      <!-- 管理者側での投稿削除ボタン -->
+      <div class="d-flex gap-3 mb-4">
+        <%= link_to "投稿を削除", admin_post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger rounded-pill px-3" %>
+      </div>
+      
       <!-- コメント一覧 -->
-      <%= render "public/comments/index", post: @post %>
-
-      <!-- コメント投稿フォーム -->
-      <%= render "public/comments/form", post: @post, comment: @comment %>
+      <%= render "admin/comments/index", post: @post %>
 
     </div>
   </div>

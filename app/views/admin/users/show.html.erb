@@ -47,7 +47,9 @@
               <h5 class="card-title"><%= post.title %></h5>
               <div class="mt-auto"> <!-- 下部に寄せる -->
               <div class="d-flex justify-content-end my-2">
-                <%= render "public/goods/form", post: post %>
+                <span class="ml-4"><i class="fas fa-heart"></i>
+                  <%= post.goods.count %> 
+                </span>
                 <span class="text-muted ml-2">
                   <i class="fa-regular fa-comment-dots"></i>
                   <%= post.comments.count %>

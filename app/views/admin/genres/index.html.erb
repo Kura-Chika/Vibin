@@ -1,26 +1,37 @@
-<div class="container-fluid position-relative">
+<div class="container my-5">
   <div class="row justify-content-center">
-    <div class="col-lg-10 col-md-8">
-      <h5>ジャンル一覧・追加</h5>
-      <%= render 'admin/genres/form', genre: @genre, btntxt: @btn_text %>
-  <div class="justify-content-center mt-4">
-  <div class="col-6">
-    <table class="table">
-      <thead style="background-color: #E0E0E0; color: #333;">
-        <tr>
-          <th>ジャンル名</th>
-          <th></th>
-        </tr>
-      </thead>
-    <tbody>
-       <% @genres.each do |genre| %>
-        <tr>
-          <td><%= genre.name %></td>
-          <td><%= link_to "編集する", edit_admin_genre_path(genre), class:"btn btn-success" %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <div class="col-lg-8 col-md-10">
+      <h2 class="text-center mb-4 border-bottom pb-2">ジャンル管理</h2>
+
+      <!-- ジャンル作成フォーム -->
+      <div class="card shadow-sm p-4 mb-5">
+        <h5 class="mb-3">ジャンルを追加</h5>
+        <%= render 'admin/genres/form', genre: @genre, btntxt: @btn_text %>
+      </div>
+
+      <!-- ジャンル一覧 -->
+      <div class="shadow-sm p-4">
+        <h5 class="mb-4">すべてのジャンル</h5>
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>ジャンル名</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @genres.each do |genre| %>
+              <tr>
+                <td><%= genre.name %></td>
+                <td class="text-end">
+                  <%= link_to "編集", edit_admin_genre_path(genre), class: "btn btn-outline-success btn-sm rounded-pill px-3" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </div>
-</div>
 </div>
