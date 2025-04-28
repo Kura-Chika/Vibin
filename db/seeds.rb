@@ -165,25 +165,25 @@ artists.each do |attrs|
 end
 
 
-Post.create( 
+Post.create!( 
   post_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/Fes1.jpg"), filename:"Fes1.jpg"),
   title: "アイドルのワールドツアー参戦！",
   body: "世界的なパフォーマンスを間近で体感。歓声と感動の渦に包まれた夜でした！",
   user: damiano
 )
-Post.create( 
+Post.create!( 
   post_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/Fes2.jpg"), filename:"Fes2.jpg"),
   title: "初めてのクラシックコンサート",
   body: "オーケストラの壮大な音に圧倒。心が浄化されるような不思議な体験ができた！",
   user: alicia
 )
-Post.create( 
+Post.create!( 
   post_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/Fes3.jpg"), filename:"Fes3.jpg"),
   title: "ロックバンドフェスで夏全開",
   body: "大好きなバンドの演奏に全力で叫び、汗だくになって、最高の思い出になった！",
   user: oliver
 )
-Post.create( 
+Post.create!( 
   post_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/Fes4.jpg"), filename:"Fes4.jpg"),
   title: "初めてのライブで感動",
   body: "生の演奏に圧倒！歌声もパフォーマンスも神がかってて鳥肌が止まらなかった！",
