@@ -5,7 +5,10 @@ class Artist < ApplicationRecord
   has_many :groups, through: :artist_groups
   belongs_to :genre
   has_one_attached :artist_image
-
+  
+  validates :introduction, length: { minimum: 2, maximum: 100 }, presence: true
+  validates :name, length: { maximum: 50 }, presence: true, uniqueness: true
+  validates :artist_image, presence: true
 
   scope :search_by_name, ->(query, match_type) {
     if query.present?

@@ -18,13 +18,11 @@ class Public::GroupsController < ApplicationController
 
   def create
     @group = current_user.owned_groups.new(group_params)
-    # 誰が作ったグループかを判断するため
-    @group.owner_id = current_user.id
-    @group.users << current_user
+    @group.users << current_user # 自動で作成者をグループのメンバーに追加
     if @group.save
-      redirect_to groups_path
+      redirect_to @group, notice: 'グループを作成しました'
     else
-      render 'index'
+      render 'new'
     end
   end
 

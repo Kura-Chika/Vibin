@@ -12,11 +12,11 @@ class User < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :permits, dependent: :destroy
   has_many :groups, through: :group_users
-  has_many :owned_groups, class_name: "Group"
+  has_many :owned_groups, class_name: "Group", foreign_key: 'owner_id'
   has_many :events  # User は複数の Event を持つ
   has_one_attached :user_image
 
-  validates :nickname, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :nickname, length: { minimum: 2, maximum: 20 }, uniqueness: true, presence: true
   validates :introduction, length: { maximum: 50 }
 
   # 検索機能

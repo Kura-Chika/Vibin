@@ -15,10 +15,9 @@ class Public::GroupUsersController < ApplicationController
     group_user = current_user.group_users.find_by(group_id: params[:group_id])
     if group_user
       group_user.destroy
-      redirect_to request.referer, notice: "グループを抜けました。"
+      redirect_to group_path(params[:group_id]), notice: "グループを抜けました。"
     else
-      redirect_to request.referer, alert: "このグループに参加していないため、グループを抜けることができません。"
+      redirect_to group_path(params[:group_id]), alert: "このグループに参加していないため、グループを抜けることができません。"
     end
   end
-  
 end

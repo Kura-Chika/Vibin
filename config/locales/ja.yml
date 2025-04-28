@@ -13,11 +13,19 @@ ja:
         password_confirmation: "パスワード(確認)"
         nickname: "ニックネーム"
       artist:
-        genre: "ジャンル"
+        genre: "ジャンル選択"
         name: "アーティスト名"
-        introduction: "アーティスト紹介"
+        introduction: "紹介文"
       genre:
         name: "ジャンル名"
+      post:
+        title: "タイトル"
+        body: "内容"
+      group:
+        introduction: "グループ紹介文"
+        name: "グループ名"
+      comment:
+        body: "コメント"
     enums:
       permit:
         statuses:

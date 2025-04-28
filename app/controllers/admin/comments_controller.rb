@@ -1,5 +1,6 @@
 class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
+  before_action :set_post, only: [:destroy]
   before_action :set_comment, only: [:destroy]
   
   def index
@@ -13,6 +14,11 @@ class Admin::CommentsController < ApplicationController
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+
 
   def set_comment
     @comment = @post.comments.find(params[:id])

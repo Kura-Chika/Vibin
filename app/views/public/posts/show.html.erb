@@ -48,6 +48,7 @@
       <%= render "public/comments/index", post: @post %>
 
       <!-- コメント投稿フォーム -->
+      <%= render 'layouts/error', obj: @comment %>
       <%= render "public/comments/form", post: @post, comment: @comment %>
 
     </div>

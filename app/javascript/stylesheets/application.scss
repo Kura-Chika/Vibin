@@ -1,11 +1,11 @@
-$primary: #6610f2;
-$secondary: #60c1d9;
-$success: #e2c788;
+$primary: #455F9D;
+$secondary: #4acfbf;
+$success: #F8E8A2;
 $info: #60c1d9;
 $warning: #60c1d9;
 $danger: #CC496B;
-$light: #60c1d9;
-$dark: #51b3ec;
+$light: #4acfbf;
+$dark: #526dab;
 
 .hover-shadow:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -130,21 +130,21 @@ preview {
   padding: 0 15px;
 }
 
+
 // ヘッダーフッター
 .admin-header,
 .admin-footer{
-  background-color: #ff6b6b; 
+  background-color: #f77851; 
 }
 
 .user-header,
 .user-footer{
-  background-color: #4dabf7; 
+  background-color: #193f8f; 
 }
 
 .guest-header,
 .guest-footer{
-  background-color: #ccc; 
+  background-color: #d4cec9f3; 
 }
-
 
 @import '~bootstrap/scss/bootstrap';

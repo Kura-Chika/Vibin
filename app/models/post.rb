@@ -6,6 +6,9 @@ class Post < ApplicationRecord
   belongs_to :user
   has_one_attached :post_image
 
+  validates :title, length: { maximum: 50 }, presence: true
+  validates :body, length: { maximum: 100 }, presence: true
+
   def artists_name
     artists.pluck(:name).join(" , ")
   end

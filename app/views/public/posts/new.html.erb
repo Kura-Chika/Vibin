@@ -1,5 +1,6 @@
 <div class="container my-4 px-4 px-md-5 py-4 bg-white border rounded shadow-sm">
-  <h2 class="mb-4 text-center">新規投稿</h2>
+  <%= render 'layouts/error', obj: @post %>
+  <h2 class="border-bottom pb-2 mb-3 text-center fw-bold">新規投稿</h2>
   <%= form_with model: @post, class: "needs-validation" do |f| %>
     <!-- タイトル -->
     <div class="mb-3">

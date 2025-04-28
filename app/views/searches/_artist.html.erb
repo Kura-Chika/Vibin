@@ -16,7 +16,7 @@
         </td>
         <td>
           <% if admin_signed_in? %> <!-- 管理者用 -->
-            <%= link_to artist.name, admin_artist_path(artist), class: 'text-dark fw-bold' %>
+            <%= link_to artist.name, admin_artists_path(artist), class: 'text-dark fw-bold' %>
           <% else %> <!-- ユーザー用 -->
             <%= link_to artist.name, artist_path(artist), class: 'text-dark fw-bold' %>
           <% end %>
