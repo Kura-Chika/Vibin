@@ -71,7 +71,7 @@ artists = [
   {
     name:      "Echo Rebels",
     introduction: "イギリスのロックバンドで、シューゲイザーとグランジの要素を取り入れた音楽が特徴。幻想的でエモーショナルな歌詞と共に、独特なギターリフを特徴とする。",
-    genre_name:   "洋楽ROCKバンド".
+    genre_name:   "洋楽ROCKバンド",
     artist_image:  "Vibin/db/fixtures/EchoRebels.jpg"
   },
   {
@@ -138,7 +138,7 @@ artists = [
     name:      "Rogue Sound",
     introduction: "ヒップホップの枠を超えた革新的なラップグループ。社会問題を歌詞に反映させ、リズムとリリックで強いメッセージを届けている。クールで力強いパフォーマンスが魅力。",
     genre_name:   "ラップ",
-    artist_image: "Vibin/db/fixtures/Rogue Sound.jpgv"
+    artist_image: "Vibin/db/fixtures/Rogue Sound.jpg"
   },
   {
     name:      "エピック・フロー",
@@ -150,11 +150,19 @@ artists = [
 
 artists.each do |attrs|
   genre = Genre.find_by!(name: attrs[:genre_name])
-  Artist.find_or_create_by!(name: attrs[:name]) do |artist|
-    artist.introduction = attrs[:introduction]
-    artist.genre       = genre
-    artist.artist_image = attrs[:artist_image]
+  artist = Artist.find_or_initialize_by(name: attrs[:name])
+  artist.introduction = attrs[:introduction]
+  artist.genre        = genre
+
+  if attrs[:artist_image].present?
+    # fixtures から画像を読み込んで ActiveStorage にアップロード
+    artist.artist_image.attach(
+      io: File.open(Rails.root.join("db", "fixtures", File.basename(attrs[:artist_image]))),
+      filename: File.basename(attrs[:artist_image])
+    )
   end
+
+  artist.save!
 end
 
 
