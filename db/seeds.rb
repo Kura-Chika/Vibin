@@ -11,7 +11,7 @@ Admin.find_or_create_by!(email: 'admin@email.com') do |admin|
   admin.password_confirmation = 'aaaaaa'
 end
 
-oliver = User.find_or_create_by!(email: 111@111") do |user|
+oliver = User.find_or_create_by!(email: "111@111") do |user|
   user.nickname = "オリバー"
   user.password = "111111"
   user.introduction = "最近始めました！ライブやフェスの参戦投稿がメインです！"
@@ -39,13 +39,6 @@ victoria = User.find_or_create_by!(email: "444@444") do |user|
   user.user_image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/user_image4.jpg"), filename:"user_image4.jpg")
 end
 
-oliver.posts.find_or_create_by!(title: "") do |post|
-  post.body = "今キテるのはBMTH！"
-end
-
-member2.posts.find_or_create_by!(title: "SKZのライブ初参戦レポ！") do |post|
-  post.body = "SKZのライブ情報共有します！"
-end
 
 
 # ジャンル登録 
@@ -65,77 +58,93 @@ genre_names.each do |name|
   Genre.find_or_create_by!(name: name)
 end
 
+puts
+
 # アーティスト登録
 artists = [
   {
     name:      "The Night Strangers",
     introduction: "アメリカ出身のロックバンド。ヘヴィなギターサウンドと疾走感溢れるドラムで、ライブパフォーマンスの迫力が特徴。最新アルバム『Midnight Echoes』は、世界中で大ヒットを記録。",
-    genre_name:   "洋楽ロックバンド"
+    genre_name:   "洋楽ROCKバンド",
+    artist_image:   "/home/ec2-user/environment/Vibin/db/fixtures/TheNightStrangers.jpg"
   },
   {
     name:      "Echo Rebels",
     introduction: "イギリスのロックバンドで、シューゲイザーとグランジの要素を取り入れた音楽が特徴。幻想的でエモーショナルな歌詞と共に、独特なギターリフを特徴とする。",
-    genre_name:   "洋楽ロックバンド"
+    genre_name:   "洋楽ROCKバンド".
+    artist_image:  "/home/ec2-user/environment/Vibin/db/fixtures/EchoRebels.jpg"
   },
   {
     name:      "サクラメメント",
     introduction: "日本のロックバンド。疾走感のあるサウンドと、深い歌詞が特徴。日本国内で幅広いファン層を持ち、ライブ活動を活発に行っている。",
-    genre_name:   "邦楽ロックバンド"
+    genre_name:   "邦楽ROCKバンド",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/サクラメメント.jpg"
   },
   {
     name:      "雷鳴リフレイン",
     introduction: "変則的なリズムとエモーショナルな歌声が特徴的な日本のロックバンド。メンバー全員が作詞作曲を担当し、その独自の音楽性で注目を集めている。",
-    genre_name:   "邦楽ロックバンド"
+    genre_name:   "邦楽ROCKバンド",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/雷鳴リフレイン.jpg"
   },
   {
     name:      "StarBloom",
     introduction: "韓国の女性グループで、ポップとダンスミュージックを融合させたサウンドが特徴。キュートなルックスとパワフルなパフォーマンスで、国内外の音楽シーンで注目されている。",
-    genre_name:   "K-POP"
+    genre_name:   "K-POP",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/StarBloom.jpg"
   },
   {
     name:      "Neon Pulse",
     introduction: "韓国出身の男性グループ。エレクトロポップを基盤に、先鋭的なビジュアルと音楽でファンを魅了。グローバルに活動しており、英語圏のファンも多い。",
-    genre_name:   "K-POP"
+    genre_name:   "K-POP",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/Vibin_no_image.jpg"
   },
   {
     name:      "晴れた日の空",
     introduction: "日本のJ-POPグループ。爽やかなメロディと心温まる歌詞が特徴で、リリースしたシングルは数多くのランキングで上位に入るなど高評価を受けている。",
-    genre_name:   "J-POP"
+    genre_name:   "J-POP",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/Vibin_no_image.jpg"
   },
   {
     name:      "ピースフルドリーム",
     introduction: "J-POPの中でもアコースティックなサウンドが特徴的なグループ。ファンとの交流を大切にし、温かみのある歌詞とメロディが共感を呼んでいる。",
-    genre_name:   "J-POP"
+    genre_name:   "J-POP",
+    artist_image:
   },
   {
     name:      "世界的な交響楽団",
     introduction: "ドイツの伝統的なオーケストラ。世界的に評価の高い演奏技術を誇り、数々の名曲を多彩に演奏する。指揮者とオーケストラの見事なハーモニーが観客を魅了する。",
-    genre_name:   "クラシック"
+    genre_name:   "クラシック",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/世界的な交響楽団.jpg"
   },
   {
     name:      "エテルナ・ソロイスト",
     introduction: "世界的に有名なクラシックのソリストたちのグループ。チェロ、ヴァイオリン、ピアノを中心に、情熱的な演奏が特徴。クラシック音楽の深さと美しさを表現している。",
-    genre_name:   "クラシック"
+    genre_name:   "クラシック",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/エテルナ・ソロイスト.jpg"
   },
   {
     name:      "藤井風雅",
     introduction: "日本の演歌歌手。故郷の風景を感じさせるような、優れた歌詞とメロディが特徴。数々の演歌大賞を受賞し、若年層からの支持も厚い。",
-    genre_name:   "演歌"
+    genre_name:   "演歌",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/Vibin_no_image.jpg"
   },
   {
     name:      "山田たけし",
     introduction: "演歌界のベテラン歌手。長年にわたるキャリアを持ち、感情豊かな歌声で観客を魅了する。彼の歌声には、深い人生観が反映されている。",
-    genre_name:   "演歌"
+    genre_name:   "演歌",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/Vibin_no_image.jpg"
   },
   {
     name:      "Rogue Sound",
     introduction: "ヒップホップの枠を超えた革新的なラップグループ。社会問題を歌詞に反映させ、リズムとリリックで強いメッセージを届けている。クールで力強いパフォーマンスが魅力。",
-    genre_name:   "ラップ"
+    genre_name:   "ラップ",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/Rogue Sound.jpgv"
   },
   {
     name:      "エピック・フロー",
     introduction: "日本のラップグループ。スムーズなフローと深い歌詞が特徴で、ファンとのつながりを大切にした活動を行っている。アルバム『Beyond the Flow』は多くの支持を集めた。",
-    genre_name:   "ラップ"
+    genre_name:   "ラップ",
+    artist_image: "/home/ec2-user/environment/Vibin/db/fixtures/エピック・フロー.jpg"
   }
 ]
 
@@ -144,6 +153,7 @@ artists.each do |attrs|
   Artist.find_or_create_by!(name: attrs[:name]) do |artist|
     artist.introduction = attrs[:introduction]
     artist.genre       = genre
+    artist.artist_image = attrs[:artist_image]
   end
 end
 
