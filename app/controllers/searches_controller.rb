@@ -6,9 +6,9 @@ class SearchesController < ApplicationController
 
     @results = case @search_type
     when 'User'
-      User.search_by_fullname(@query, @match_type)
+      User.search_by_fullname(@query, @match_type).where(is_active: true)
     when 'Post'
-      Post.search_by_name(@query, @match_type).where(is_active: true)
+      Post.search_by_name(@query, @match_type)
     when 'Artist'
       Artist.search_by_name(@query, @match_type)
     when 'Comment'

@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <div class="comment-form bg-info p-4 rounded shadow-sm mt-5">
+  <div class="comment-form bg-light p-4 rounded shadow-sm mt-5">
     <h5 class="mb-3 fw-bold">コメントを投稿する</h5>
     <%= form_with model: [post, comment] do |f| %>
       <%= f.text_area :body, rows:'4', placeholder: "コメントを書いてみましょう...", class: "form-control rounded w-100", style: "resize: none;" %>

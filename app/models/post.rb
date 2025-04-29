@@ -32,10 +32,10 @@ class Post < ApplicationRecord
       case match_type
       when 'partial'
         joins(:user).where(users: { is_active: true })
-                    .where("post.title LIKE :q OR post.body LIKE :q", q: "%#{query}%")
+                    .where("title LIKE :q OR body LIKE :q", q: "%#{query}%")
       else
         joins(:user).where(users: { is_active: true })
-                    .where("post.title = :q OR post.body = :q", q: query)
+                    .where("title = :q OR body = :q", q: query)
       end
     else
       joins(:user).where(users: { is_active: true })
