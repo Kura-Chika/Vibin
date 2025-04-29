@@ -8,7 +8,7 @@ class SearchesController < ApplicationController
     when 'User'
       User.search_by_fullname(@query, @match_type)
     when 'Post'
-      Post.search_by_name(@query, @match_type)
+      Post.search_by_name(@query, @match_type).where(is_active: true)
     when 'Artist'
       Artist.search_by_name(@query, @match_type)
     when 'Comment'

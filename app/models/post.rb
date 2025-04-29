@@ -31,12 +31,14 @@ class Post < ApplicationRecord
     if query.present?
       case match_type
       when 'partial'
-        where("title LIKE :q OR body LIKE :q", q: "%#{query}%")
+        joins(:user).where(users: { is_active: true })
+                    .where("post.title LIKE :q OR post.body LIKE :q", q: "%#{query}%")
       else
-        where("title = :q OR body = :q", q: query)
+        joins(:user).where(users: { is_active: true })
+                    .where("post.title = :q OR post.body = :q", q: query)
       end
     else
-      all
+      joins(:user).where(users: { is_active: true })
     end
   }
 

@@ -24,12 +24,12 @@ class User < ApplicationRecord
     if query.present?
       case match_type
       when 'partial'
-        where("nickname LIKE ?", "%#{query}%")
+        where(is_active: true).where("nickname LIKE ?", "%#{query}%")
       else # 完全一致
-        where(nickname: query)
+        where(is_active: true).where(nickname: query)
       end
     else
-      all
+      where(is_active: true)
     end
   }
   
