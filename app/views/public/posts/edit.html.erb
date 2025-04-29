@@ -39,12 +39,11 @@
     </div>
 
     <div class="text-center">
-      <%= f.submit "投稿を更新する", class: "btn btn-success rounded-pill px-5 py-2 fw-bold" %>
+      <%= f.submit "投稿を更新する", class: "btn btn-info rounded-pill px-5 py-2 fw-bold" %>
     </div>
   <% end %>
 
-  <div class="d-flex justify-content-between mt-4">
-    <%= link_to "投稿詳細を見る", post_path(@post), class: "btn btn-outline-primary rounded-pill" %>
-    <%= link_to "投稿一覧に戻る", posts_path, class: "btn btn-outline-secondary rouonded-pill" %>
+  <div class="d-flex justify-content-center mt-4">
+    <%= link_to "投稿詳細へ戻る", post_path(@post), class: "btn btn-outline-primary rounded-pill" %>
   </div>
 </div>

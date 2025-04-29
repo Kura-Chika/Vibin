@@ -56,7 +56,7 @@
                 <% events = @events.select { |e| e[:start] == day.to_date } %> <!-- その日のイベント抽出 -->
                 <% if events.any? %>
                   <% events.each do |event| %>
-                    <div class="badge bg-primary mb-1"><%= link_to event[:title], event[:url] %></div><br>
+                    <div class="badge bg-success mb-1"><%= link_to event[:title], event[:url] %></div><br>
                   <% end %>
                 <% else %>
                   <span class="text-muted small">予定なし</span>
